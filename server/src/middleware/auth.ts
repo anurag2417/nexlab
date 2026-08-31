@@ -22,7 +22,7 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
   }
 
   try {
-    const decoded = verifyToken(token) as TokenPayload;
+    const decoded = verifyToken(token);
     
     if (!decoded || !decoded.id) {
       return res.status(401).json({
