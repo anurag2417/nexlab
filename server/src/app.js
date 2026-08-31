@@ -28,8 +28,8 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'http://localhost:3000',
+    'https://nexlab-liart.vercel.app',
     'https://nexlab.vercel.app',
-    'https://nexlab-git-main.vercel.app',
     process.env.CORS_ORIGIN || '*'
   ],
   credentials: true,
