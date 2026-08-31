@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import { verifyToken, TokenPayload } from '../config/jwt.js';
 
 export interface AuthRequest extends Request {
   user?: any;
@@ -21,7 +22,15 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: string };
+    const decoded = verifyToken(token) as TokenPayload;
+    
+    if (!decoded || !decoded.id) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid token',
+      });
+    }
+
     const user = await User.findById(decoded.id).select('-password');
 
     if (!user) {
