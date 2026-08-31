@@ -16,4 +16,8 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: true,
   },
+  // Add this for production
+  define: {
+    'process.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL),
+  },
 });
