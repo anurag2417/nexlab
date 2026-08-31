@@ -32,7 +32,7 @@ export const Navbar = () => {
       className={cn(
         'fixed top-0 z-50 w-full transition-all duration-300',
         isScrolled
-          ? 'bg-white/90 backdrop-blur-xl border-b border-gray-200/50 shadow-sm'
+          ? 'bg-white/90 backdrop-blur-xl border-b border-light-blue shadow-sm'
           : 'bg-transparent'
       )}
     >
@@ -40,8 +40,8 @@ export const Navbar = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 flex-shrink-0">
-            <Sparkles className="h-7 w-7 text-primary-600" />
-            <span className="text-xl font-bold text-gray-900 tracking-tight">NexLab</span>
+            <Sparkles className="h-7 w-7 text-dark-blue" />
+            <span className="text-xl font-bold text-navy tracking-tight">NexLab</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -51,13 +51,13 @@ export const Navbar = () => {
               className={cn(
                 'text-sm font-medium transition-colors relative',
                 isActive('/showcase')
-                  ? 'text-primary-700'
-                  : 'text-gray-600 hover:text-primary-700'
+                  ? 'text-dark-blue'
+                  : 'text-gray-600 hover:text-dark-blue'
               )}
             >
               Showcase
               {isActive('/showcase') && (
-                <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-primary-500 rounded-full" />
+                <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-dark-blue rounded-full" />
               )}
             </Link>
             {user && (
@@ -67,13 +67,13 @@ export const Navbar = () => {
                   className={cn(
                     'text-sm font-medium transition-colors relative',
                     isActive('/dashboard')
-                      ? 'text-primary-700'
-                      : 'text-gray-600 hover:text-primary-700'
+                      ? 'text-dark-blue'
+                      : 'text-gray-600 hover:text-dark-blue'
                   )}
                 >
                   Dashboard
                   {isActive('/dashboard') && (
-                    <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-primary-500 rounded-full" />
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-dark-blue rounded-full" />
                   )}
                 </Link>
                 <Link
@@ -81,13 +81,13 @@ export const Navbar = () => {
                   className={cn(
                     'text-sm font-medium transition-colors relative',
                     isActive('/courses')
-                      ? 'text-primary-700'
-                      : 'text-gray-600 hover:text-primary-700'
+                      ? 'text-dark-blue'
+                      : 'text-gray-600 hover:text-dark-blue'
                   )}
                 >
                   Courses
                   {isActive('/courses') && (
-                    <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-primary-500 rounded-full" />
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-dark-blue rounded-full" />
                   )}
                 </Link>
               </>
@@ -100,28 +100,27 @@ export const Navbar = () => {
               <div className="relative">
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center gap-2 rounded-full border border-gray-200/70 bg-white/50 px-3 py-1.5 transition-all hover:border-primary-300/50 hover:bg-gray-50/80"
+                  className="flex items-center gap-2 rounded-full border border-light-blue/70 bg-white/50 px-3 py-1.5 transition-all hover:border-mid-blue/50 hover:bg-light-blue/30"
                 >
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 text-primary-700 text-sm font-medium">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-dark-blue text-white text-sm font-medium">
                     {user.name?.charAt(0) || 'U'}
                   </div>
-                  <span className="text-sm text-gray-700 max-w-[100px] truncate">
+                  <span className="text-sm text-navy max-w-[100px] truncate">
                     {user.name}
                   </span>
                   <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
 
-                {/* Dropdown Menu */}
                 {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-56 rounded-xl border border-gray-200/50 bg-white shadow-2xl shadow-gray-200/20 backdrop-blur-xl overflow-hidden">
-                    <div className="p-3 border-b border-gray-100/80">
-                      <p className="text-sm font-medium text-gray-900">{user.name}</p>
+                  <div className="absolute right-0 mt-2 w-56 rounded-xl border border-light-blue/50 bg-white shadow-2xl shadow-mid-blue/10 backdrop-blur-xl overflow-hidden">
+                    <div className="p-3 border-b border-light-blue/50">
+                      <p className="text-sm font-medium text-navy">{user.name}</p>
                       <p className="text-xs text-gray-500 truncate">{user.email}</p>
                     </div>
                     <div className="p-1">
                       <Link
                         to="/profile"
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-primary-50/80 hover:text-primary-700"
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-light-blue hover:text-dark-blue"
                         onClick={() => setIsDropdownOpen(false)}
                       >
                         <User className="h-4 w-4" />
@@ -129,7 +128,7 @@ export const Navbar = () => {
                       </Link>
                       <Link
                         to="/dashboard"
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-primary-50/80 hover:text-primary-700"
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-light-blue hover:text-dark-blue"
                         onClick={() => setIsDropdownOpen(false)}
                       >
                         <Sparkles className="h-4 w-4" />
@@ -137,7 +136,7 @@ export const Navbar = () => {
                       </Link>
                       <Link
                         to="/settings"
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-primary-50/80 hover:text-primary-700"
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-light-blue hover:text-dark-blue"
                         onClick={() => setIsDropdownOpen(false)}
                       >
                         <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -147,13 +146,13 @@ export const Navbar = () => {
                         Settings
                       </Link>
                     </div>
-                    <div className="p-1 border-t border-gray-100/80">
+                    <div className="p-1 border-t border-light-blue/50">
                       <button
                         onClick={() => {
                           logout();
                           setIsDropdownOpen(false);
                         }}
-                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-red-600 transition-colors hover:bg-red-50/80 hover:text-red-700"
+                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-red-600 transition-colors hover:bg-red-50 hover:text-red-700"
                       >
                         <LogOut className="h-4 w-4" />
                         Logout
@@ -165,13 +164,13 @@ export const Navbar = () => {
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="ghost" size="sm" className="text-gray-600 hover:text-gray-900 hover:bg-gray-100/80">
+                  <Button variant="ghost" size="sm" className="text-gray-600 hover:text-dark-blue hover:bg-light-blue">
                     <LogIn className="mr-2 h-4 w-4" />
                     Log In
                   </Button>
                 </Link>
                 <Link to="/register">
-                  <Button size="sm" className="bg-primary-600 text-white hover:bg-primary-700 shadow-md shadow-primary-500/25">
+                  <Button size="sm" className="bg-gradient-to-r from-dark-blue to-mid-blue text-white hover:shadow-lg hover:shadow-mid-blue/30">
                     Start Free
                   </Button>
                 </Link>
@@ -179,28 +178,22 @@ export const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden text-gray-600 hover:text-gray-900 transition-colors"
+            className="md:hidden text-gray-600 hover:text-navy transition-colors"
             aria-label="Toggle menu"
           >
-            {isMobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="border-t border-gray-200/50 bg-white/95 backdrop-blur-xl px-6 py-6 md:hidden">
+        <div className="border-t border-light-blue/50 bg-white/95 backdrop-blur-xl px-6 py-6 md:hidden">
           <nav className="flex flex-col gap-4">
             <Link
               to="/showcase"
-              className="text-base font-medium text-gray-600 hover:text-primary-700 transition-colors"
+              className="text-base font-medium text-gray-600 hover:text-dark-blue transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Showcase
@@ -209,35 +202,35 @@ export const Navbar = () => {
               <>
                 <Link
                   to="/dashboard"
-                  className="text-base font-medium text-gray-600 hover:text-primary-700 transition-colors"
+                  className="text-base font-medium text-gray-600 hover:text-dark-blue transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Dashboard
                 </Link>
                 <Link
                   to="/courses"
-                  className="text-base font-medium text-gray-600 hover:text-primary-700 transition-colors"
+                  className="text-base font-medium text-gray-600 hover:text-dark-blue transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Courses
                 </Link>
               </>
             )}
-            <div className="pt-4 border-t border-gray-200/50">
+            <div className="pt-4 border-t border-light-blue/50">
               {user ? (
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 px-2 py-1">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-100 text-primary-700 text-sm font-medium">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-dark-blue text-white text-sm font-medium">
                       {user.name?.charAt(0) || 'U'}
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-900">{user.name}</p>
+                      <p className="text-sm font-medium text-navy">{user.name}</p>
                       <p className="text-xs text-gray-500 truncate">{user.email}</p>
                     </div>
                   </div>
                   <Link
                     to="/profile"
-                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-gray-600 hover:bg-primary-50/80 hover:text-primary-700 transition-colors"
+                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-gray-600 hover:bg-light-blue hover:text-dark-blue transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <User className="h-4 w-4" />
@@ -248,7 +241,7 @@ export const Navbar = () => {
                       logout();
                       setIsMobileMenuOpen(false);
                     }}
-                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-red-600 hover:bg-red-50/80 hover:text-red-700 transition-colors"
+                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors"
                   >
                     <LogOut className="h-4 w-4" />
                     Logout
@@ -257,13 +250,13 @@ export const Navbar = () => {
               ) : (
                 <div className="space-y-3">
                   <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Button variant="outline" className="w-full border-gray-300 text-gray-700 hover:border-primary-500 hover:text-primary-700">
+                    <Button variant="outline" className="w-full border-mid-blue text-dark-blue hover:bg-light-blue">
                       <LogIn className="mr-2 h-4 w-4" />
                       Log In
                     </Button>
                   </Link>
                   <Link to="/register" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Button className="w-full bg-primary-600 text-white hover:bg-primary-700">
+                    <Button className="w-full bg-gradient-to-r from-dark-blue to-mid-blue text-white hover:shadow-lg hover:shadow-mid-blue/30">
                       Start Free
                     </Button>
                   </Link>

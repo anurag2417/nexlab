@@ -6,14 +6,14 @@ export const StreakCard = ({ streak, xp, level }) => {
   const xpToNextLevel = (level * 100) - xp;
 
   return (
-    <Card className="bg-gradient-to-br from-amber-50/80 to-orange-50/80 border-amber-200/50 shadow-sm">
+    <Card className="bg-gradient-to-br from-light-blue/80 to-mid-blue/10 border-light-blue shadow-sm">
       <CardHeader>
-        <CardTitle className="text-sm font-medium text-amber-800">Your Progress</CardTitle>
+        <CardTitle className="text-sm font-medium text-dark-blue">Your Progress</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="rounded-full bg-amber-200/60 p-2.5">
+            <div className="rounded-full bg-amber-100 p-2.5">
               <Flame className="h-6 w-6 text-amber-600" />
             </div>
             <div>
@@ -22,12 +22,12 @@ export const StreakCard = ({ streak, xp, level }) => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="rounded-full bg-primary-100 p-2.5">
-              <Zap className="h-6 w-6 text-primary-600" />
+            <div className="rounded-full bg-light-blue p-2.5">
+              <Zap className="h-6 w-6 text-dark-blue" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-primary-700">{xp}</p>
-              <p className="text-xs text-primary-600">XP</p>
+              <p className="text-2xl font-bold text-dark-blue">{xp}</p>
+              <p className="text-xs text-gray-500">XP</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -42,13 +42,13 @@ export const StreakCard = ({ streak, xp, level }) => {
         </div>
         {xpToNextLevel > 0 && (
           <div className="mt-3">
-            <div className="flex justify-between text-xs text-amber-700">
+            <div className="flex justify-between text-xs text-dark-blue">
               <span>Progress to Level {level + 1}</span>
               <span>{xpToNextLevel} XP needed</span>
             </div>
-            <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-amber-200/50">
+            <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-light-blue/50">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-400 transition-all"
+                className="h-full rounded-full bg-gradient-to-r from-dark-blue to-mid-blue transition-all"
                 style={{ width: `${(xp / (level * 100)) * 100}%` }}
               />
             </div>

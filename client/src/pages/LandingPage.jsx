@@ -10,13 +10,14 @@ import { Footer } from '../components/ui/Footer';
 
 const LandingPage = () => {
   return (
-    <div className="min-h-screen w-full bg-[#0a0a0f] overflow-x-hidden">
+    <div className="min-h-screen w-full bg-white overflow-x-hidden">
       <div className="relative w-full">
+        {/* Animated Background Gradient */}
         <div className="fixed inset-0 -z-10 w-full">
-          <div className="absolute inset-0 w-full bg-[#0a0a0f]" />
-          <div className="absolute top-0 -left-40 h-[500px] w-[500px] rounded-full bg-purple-600/20 blur-3xl animate-pulse-slow" />
-          <div className="absolute top-1/2 -right-40 h-[500px] w-[500px] rounded-full bg-blue-600/20 blur-3xl animate-pulse-slow delay-1000" />
-          <div className="absolute bottom-0 left-1/2 h-[400px] w-[400px] rounded-full bg-cyan-600/20 blur-3xl animate-pulse-slow delay-2000" />
+          <div className="absolute inset-0 w-full bg-white" />
+          <div className="absolute top-0 -left-40 h-[500px] w-[500px] rounded-full bg-light-blue/60 blur-3xl" />
+          <div className="absolute top-1/2 -right-40 h-[500px] w-[500px] rounded-full bg-mid-blue/30 blur-3xl" />
+          <div className="absolute bottom-0 left-1/2 h-[400px] w-[400px] rounded-full bg-light-blue/40 blur-3xl" />
         </div>
 
         <Navbar />

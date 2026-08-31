@@ -7,55 +7,55 @@ const features = [
     icon: Brain,
     title: 'Build Real AI Projects',
     description: 'Chatbots, image recognizers, neural networks—you build them from scratch.',
-    gradient: 'from-purple-500 to-pink-500'
+    gradient: 'from-dark-blue to-mid-blue'
   },
   {
     icon: Terminal,
     title: 'Use Professional Tools',
     description: 'Python, PyTorch, Hugging Face, VS Code—the same tools AI engineers use.',
-    gradient: 'from-blue-500 to-cyan-500'
+    gradient: 'from-dark-blue to-mid-blue'
   },
   {
     icon: Users,
     title: 'Learn by Doing',
     description: 'No passive lectures. Every session is hands-on coding with real-time feedback.',
-    gradient: 'from-green-500 to-emerald-500'
+    gradient: 'from-dark-blue to-mid-blue'
   },
   {
     icon: Briefcase,
     title: 'Build Your Portfolio',
     description: 'Graduate with 4 complete projects to show employers and universities.',
-    gradient: 'from-orange-500 to-yellow-500'
+    gradient: 'from-dark-blue to-mid-blue'
   },
   {
     icon: Zap,
     title: 'Instant Feedback',
     description: 'Run your code and see results immediately. Learn faster with rapid iteration.',
-    gradient: 'from-yellow-500 to-amber-500'
+    gradient: 'from-dark-blue to-mid-blue'
   },
   {
     icon: Shield,
     title: 'Guided Learning Path',
     description: 'Step-by-step sprints from beginner to advanced. No getting lost.',
-    gradient: 'from-red-500 to-rose-500'
+    gradient: 'from-dark-blue to-mid-blue'
   },
   {
     icon: Globe,
     title: 'Indian Context',
     description: 'Curriculum aligned with CBSE and designed for Indian students.',
-    gradient: 'from-teal-500 to-cyan-500'
+    gradient: 'from-dark-blue to-mid-blue'
   },
   {
     icon: Award,
     title: 'Earn Certificates',
     description: 'Get recognized for your achievements with digital certificates.',
-    gradient: 'from-pink-500 to-rose-500'
+    gradient: 'from-dark-blue to-mid-blue'
   },
 ];
 
 export const Features = () => {
   return (
-    <section className="relative w-full py-20 overflow-hidden bg-[#0a0a0f]">
+    <section className="relative w-full py-20 overflow-hidden bg-white">
       <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20 xl:px-28">
         <div className="mb-16 text-center">
           <motion.h2
@@ -63,9 +63,9 @@ export const Features = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-3xl font-bold text-white"
+            className="text-3xl font-bold text-navy"
           >
-            Why <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">NexLab</span>?
+            Why <span className="bg-gradient-to-r from-dark-blue to-mid-blue bg-clip-text text-transparent">NexLab</span>?
           </motion.h2>
         </div>
 
@@ -77,13 +77,13 @@ export const Features = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.06 }}
               viewport={{ once: true }}
-              className="group relative rounded-2xl border border-gray-800/50 bg-gray-900/30 p-6 backdrop-blur-sm transition-all hover:border-gray-700/50 hover:bg-gray-800/40 hover:shadow-xl hover:shadow-purple-500/5"
+              className="group relative rounded-2xl border border-light-blue bg-white p-6 backdrop-blur-sm transition-all hover:border-mid-blue hover:shadow-lg hover:shadow-mid-blue/10 hover:-translate-y-1"
             >
-              <div className="mb-4 inline-flex rounded-xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 p-3 transition-all group-hover:scale-110">
-                <feature.icon className="h-6 w-6 bg-gradient-to-br from-purple-400 to-pink-400 bg-clip-text text-transparent" />
+              <div className="mb-4 inline-flex rounded-xl bg-light-blue/50 p-3 transition-all group-hover:scale-110">
+                <feature.icon className="h-6 w-6 text-dark-blue" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-white">{feature.title}</h3>
-              <p className="text-sm text-gray-400 leading-relaxed">{feature.description}</p>
+              <h3 className="mb-2 text-lg font-semibold text-navy">{feature.title}</h3>
+              <p className="text-sm text-gray-500 leading-relaxed">{feature.description}</p>
             </motion.div>
           ))}
         </div>

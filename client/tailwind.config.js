@@ -7,39 +7,48 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Custom color palette
+        light: {
+          blue: '#E7F0FA',
+        },
+        mid: {
+          blue: '#7BA4D0',
+        },
+        dark: {
+          blue: '#2E5E99',
+        },
+        navy: {
+          DEFAULT: '#0D2440',
+        },
+        // Keep existing for compatibility
+        primary: {
+          DEFAULT: '#2E5E99',
+          light: '#7BA4D0',
+          lighter: '#E7F0FA',
+          dark: '#0D2440',
+          50: '#E7F0FA',
+          100: '#D0E0F0',
+          200: '#A1C1E0',
+          300: '#7BA4D0',
+          400: '#4A7DB0',
+          500: '#2E5E99',
+          600: '#1A4A80',
+          700: '#0D2440',
+          800: '#0A1A30',
+          900: '#061020',
+        },
+        secondary: {
+          DEFAULT: '#7BA4D0',
+          light: '#E7F0FA',
+          dark: '#2E5E99',
+          navy: '#0D2440',
+        },
+        // Keep existing
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-          50: '#f5f3ff',
-          100: '#ede9fe',
-          200: '#ddd6fe',
-          300: '#c4b5fd',
-          400: '#a78bfa',
-          500: '#8b5cf6',
-          600: '#7c3aed',
-          700: '#6d28d9',
-          800: '#5b21b6',
-          900: '#4c1d95',
-        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",

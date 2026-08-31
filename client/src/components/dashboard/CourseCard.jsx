@@ -20,24 +20,34 @@ export const CourseCard = ({
 }) => {
   const isCompleted = progress === 100 && totalSprints > 0;
 
+  const colorMap = {
+    blue: 'blue',
+    green: 'green',
+    purple: 'purple',
+    orange: 'orange',
+    red: 'red',
+  };
+
+  const bgColor = colorMap[color] || 'blue';
+
   return (
     <Card className={cn(
-      'overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-gray-200/50 hover:-translate-y-1 bg-white border-gray-200/50',
+      'overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-mid-blue/10 hover:-translate-y-1 bg-white border-light-blue',
       isLocked && 'opacity-70'
     )}>
-      <div className={`h-1.5 bg-gradient-to-r from-${color}-400 to-${color}-300`} />
+      <div className={`h-1.5 bg-gradient-to-r from-${bgColor}-400 to-${bgColor}-300`} />
       <CardHeader>
         <div className="flex items-center justify-between">
           <span className="text-3xl">{icon}</span>
           <div className="flex items-center gap-2">
             {isLocked && <Lock className="h-4 w-4 text-gray-400" />}
             {isCompleted && !isLocked && <CheckCircle className="h-4 w-4 text-green-500" />}
-            <span className={`text-xs font-medium text-${color}-600 bg-${color}-50/80 px-2.5 py-1 rounded-full border border-${color}-200/50`}>
+            <span className={`text-xs font-medium text-${bgColor}-600 bg-${bgColor}-50/80 px-2.5 py-1 rounded-full border border-${bgColor}-200/50`}>
               Tier {tier}
             </span>
           </div>
         </div>
-        <CardTitle className="text-lg text-gray-900 group-hover:text-primary-600 transition-colors">
+        <CardTitle className="text-lg text-navy group-hover:text-dark-blue transition-colors">
           {title}
         </CardTitle>
         <CardDescription className="text-sm text-gray-500 line-clamp-2">
@@ -48,7 +58,7 @@ export const CourseCard = ({
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
             <span className="text-gray-500">Progress</span>
-            <span className="font-medium text-gray-700">{Math.round(progress)}%</span>
+            <span className="font-medium text-navy">{Math.round(progress)}%</span>
           </div>
           <Progress 
             value={progress} 
@@ -67,8 +77,8 @@ export const CourseCard = ({
               isCompleted && !isLocked 
                 ? 'bg-green-600 hover:bg-green-700 text-white' 
                 : isLocked 
-                  ? 'border-gray-300 text-gray-400 hover:border-primary-400 hover:text-primary-600' 
-                  : 'bg-primary-600 hover:bg-primary-700 text-white shadow-md shadow-primary-500/20'
+                  ? 'border-mid-blue text-gray-400 hover:border-dark-blue hover:text-dark-blue' 
+                  : 'bg-gradient-to-r from-dark-blue to-mid-blue text-white hover:shadow-lg hover:shadow-mid-blue/30'
             }`}
             disabled={isLocked}
           >

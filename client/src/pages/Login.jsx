@@ -32,10 +32,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-50/80 px-4 py-8">
+    <div className="min-h-screen w-full flex items-center justify-center bg-light-blue/20 px-4 py-8">
       <div className="absolute inset-0 w-full overflow-hidden">
-        <div className="absolute top-0 -left-40 h-[500px] w-[500px] rounded-full bg-primary-200/20 blur-3xl" />
-        <div className="absolute bottom-0 -right-40 h-[500px] w-[500px] rounded-full bg-secondary-200/20 blur-3xl" />
+        <div className="absolute top-0 -left-40 h-[500px] w-[500px] rounded-full bg-light-blue/60 blur-3xl" />
+        <div className="absolute bottom-0 -right-40 h-[500px] w-[500px] rounded-full bg-mid-blue/20 blur-3xl" />
       </div>
 
       <motion.div
@@ -44,18 +44,18 @@ const Login = () => {
         transition={{ duration: 0.6 }}
         className="relative z-10 w-full max-w-md"
       >
-        <Card className="border-gray-200/60 bg-white/80 backdrop-blur-xl shadow-2xl shadow-gray-200/50">
+        <Card className="border-light-blue/60 bg-white/80 backdrop-blur-xl shadow-2xl shadow-mid-blue/10">
           <CardHeader>
-            <Link to="/" className="mb-4 inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary-600 transition-colors">
+            <Link to="/" className="mb-4 inline-flex items-center gap-2 text-sm text-gray-500 hover:text-dark-blue transition-colors">
               <ArrowLeft className="h-4 w-4" />
               Back to home
             </Link>
             <div className="flex items-center gap-3">
-              <div className="rounded-full bg-primary-100 p-2.5">
-                <Sparkles className="h-6 w-6 text-primary-600" />
+              <div className="rounded-full bg-light-blue p-2.5">
+                <Sparkles className="h-6 w-6 text-dark-blue" />
               </div>
               <div>
-                <CardTitle className="text-2xl text-gray-900">Welcome Back</CardTitle>
+                <CardTitle className="text-2xl text-navy">Welcome Back</CardTitle>
                 <CardDescription className="text-gray-500">
                   Sign in to continue your learning journey
                 </CardDescription>
@@ -65,34 +65,34 @@ const Login = () => {
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-700">Email</label>
+                <label className="mb-1.5 block text-sm font-medium text-navy">Email</label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <Input
                     type="email"
                     placeholder="you@example.com"
                     error={errors.email?.message}
-                    className="pl-9 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
+                    className="pl-9 bg-white border-light-blue text-navy placeholder:text-gray-400 focus:border-dark-blue focus:ring-2 focus:ring-dark-blue/20"
                     {...register('email')}
                   />
                 </div>
               </div>
               
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-700">Password</label>
+                <label className="mb-1.5 block text-sm font-medium text-navy">Password</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <Input
                     type={showPassword ? 'text' : 'password'}
                     placeholder="••••••••"
                     error={errors.password?.message}
-                    className="pl-9 pr-10 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
+                    className="pl-9 pr-10 bg-white border-light-blue text-navy placeholder:text-gray-400 focus:border-dark-blue focus:ring-2 focus:ring-dark-blue/20"
                     {...register('password')}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-navy transition-colors"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -100,7 +100,7 @@ const Login = () => {
               </div>
               
               <div className="flex items-center justify-between">
-                <Link to="/forgot-password" className="text-sm text-primary-600 hover:text-primary-700 transition-colors font-medium">
+                <Link to="/forgot-password" className="text-sm text-dark-blue hover:text-mid-blue transition-colors font-medium">
                   Forgot password?
                 </Link>
               </div>
@@ -115,7 +115,7 @@ const Login = () => {
                 </motion.p>
               )}
 
-              <Button type="submit" disabled={isLoading} className="w-full bg-primary-600 hover:bg-primary-700 text-white py-6 text-base shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 transition-all">
+              <Button type="submit" disabled={isLoading} className="w-full bg-gradient-to-r from-dark-blue to-mid-blue text-white hover:shadow-lg hover:shadow-mid-blue/30 py-6 text-base">
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -128,12 +128,12 @@ const Login = () => {
 
               <p className="text-center text-sm text-gray-500">
                 Don't have an account?{' '}
-                <Link to="/register" className="font-medium text-primary-600 hover:text-primary-700 transition-colors">
+                <Link to="/register" className="font-medium text-dark-blue hover:text-mid-blue transition-colors">
                   Sign up
                 </Link>
               </p>
 
-              <div className="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-200/60">
+              <div className="mt-4 p-3 bg-light-blue/30 rounded-lg border border-light-blue">
                 <p className="text-xs text-gray-500 text-center">
                   Demo: Use any email and password (min 6 characters)
                 </p>
