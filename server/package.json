@@ -5,9 +5,7 @@
   "main": "dist/server.js",
   "type": "module",
   "scripts": {
-    "build": "npm run build:tsc",
-    "build:tsc": "tsc",
-    "build:esbuild": "esbuild src/server.ts --bundle --platform=node --target=node20 --outfile=dist/server.js",
+    "build": "tsc",
     "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
     "seed": "tsx src/seeders/index.ts",
@@ -41,7 +39,6 @@
     "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
-    "esbuild": "^0.19.9",
     "eslint": "^8.55.0",
     "tsx": "^4.6.1",
     "typescript": "^5.3.3"
