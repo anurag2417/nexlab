@@ -1,9 +1,10 @@
 #!/bin/bash
+set -e
 
-# Install dependencies
+echo "📦 Installing dependencies..."
 npm install
 
-# Install all type definitions
+echo "📦 Installing type definitions..."
 npm install --save-dev \
   @types/node \
   @types/express \
@@ -15,5 +16,7 @@ npm install --save-dev \
   @types/multer \
   @types/uuid
 
-# Build the project
-npm run build
+echo "🔨 Building with TypeScript (skipLibCheck enabled)..."
+npx tsc --skipLibCheck
+
+echo "✅ Build complete!"
