@@ -1,0 +1,35 @@
+import dotenv from 'dotenv';
+import app from './app.js';
+import connectDB from './config/database.js';
+import logger from './utils/logger.js';
+
+dotenv.config();
+
+process.on('uncaughtException', (err) => {
+  logger.error('UNCAUGHT EXCEPTION! 💥 Shutting down...');
+  logger.error(err.name, err.message, err.stack);
+  process.exit(1);
+});
+
+connectDB();
+
+const PORT = process.env.PORT || 5000;
+const server = app.listen(PORT, () => {
+  logger.info(`🚀 Server running on port ${PORT}`);
+  logger.info(`📍 Environment: ${process.env.NODE_ENV}`);
+});
+
+process.on('unhandledRejection', (err: Error) => {
+  logger.error('UNHANDLED REJECTION! 💥 Shutting down...');
+  logger.error(err.name, err.message);
+  server.close(() => {
+    process.exit(1);
+  });
+});
+
+process.on('SIGTERM', () => {
+  logger.info('👋 SIGTERM received. Shutting down gracefully');
+  server.close(() => {
+    logger.info('💥 Process terminated!');
+  });
+});
