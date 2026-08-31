@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -13,7 +13,8 @@ import sandboxRoutes from './routes/sandboxRoutes.js';
 import projectRoutes from './routes/projectRoutes.js';
 import leaderboardRoutes from './routes/leaderboardRoutes.js';
 
-import { corsOptions } from './config/cors.js';
+import errorHandler from './middleware/errorHandler.js';
+import { AppError } from './middleware/errorHandler.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,7 +25,14 @@ const app = express();
 app.use(helmet());
 
 // CORS
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  exposedHeaders: ['Authorization'],
+  maxAge: 86400,
+}));
 
 // Rate limiting
 const limiter = rateLimit({
@@ -57,7 +65,7 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
 
 // Health check
-app.get('/api/health', (req, res) => {
+app.get('/api/health', (req: Request, res: Response) => {
   res.status(200).json({
     status: 'success',
     message: 'Server is running',
@@ -67,12 +75,16 @@ app.get('/api/health', (req, res) => {
 });
 
 // 404 handler
-app.use((req, res) => {
+app.use((req: Request, res: Response) => {
   res.status(404).json({
     success: false,
     message: `Route ${req.originalUrl} not found`,
   });
 });
 
+// Global error handler
+app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
+  errorHandler(err, req, res, next);
+});
 
 export default app;
