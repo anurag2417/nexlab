@@ -1,34 +1,7 @@
 import { create } from 'zustand';
 
-export interface Sprint {
-  id: string;
-  title: string;
-  description?: string;
-  content?: string;
-  starterCode?: string;
-  estimatedTime?: number;
-}
-
-export interface Course {
-  id: string;
-  title: string;
-  description: string;
-  tier: number;
-  icon: string;
-  color: string;
-  sprints: Sprint[];
-  isActive?: boolean;
-}
-
-export interface UserProgress {
-  currentTier: number;
-  completedSprints: string[];
-  totalSprintsCompleted: number;
-  lastActive: Date;
-}
-
 // Demo data
-const demoCourses: Course[] = [
+const demoCourses = [
   {
     id: '1',
     title: 'Digital Literacy',
@@ -100,23 +73,7 @@ const demoCourses: Course[] = [
   },
 ];
 
-interface CourseState {
-  courses: Course[];
-  currentCourse: Course | null;
-  currentSprint: Sprint | null;
-  progress: UserProgress | null;
-  isLoading: boolean;
-  error: string | null;
-
-  fetchCourses: () => Promise<void>;
-  fetchCourse: (tier: number) => Promise<void>;
-  fetchSprint: (sprintId: string) => Promise<void>;
-  fetchProgress: () => Promise<void>;
-  markSprintComplete: (sprintId: string) => Promise<void>;
-  clearError: () => void;
-}
-
-export const useCourseStore = create<CourseState>((set, get) => ({
+export const useCourseStore = create((set, get) => ({
   courses: [],
   currentCourse: null,
   currentSprint: null,
@@ -127,13 +84,12 @@ export const useCourseStore = create<CourseState>((set, get) => ({
   fetchCourses: async () => {
     set({ isLoading: true, error: null });
     try {
-      // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 500));
       set({ 
         courses: demoCourses, 
         isLoading: false 
       });
-    } catch (error: any) {
+    } catch (error) {
       set({ 
         error: error.response?.data?.message || 'Failed to fetch courses',
         isLoading: false 
@@ -141,13 +97,13 @@ export const useCourseStore = create<CourseState>((set, get) => ({
     }
   },
 
-  fetchCourse: async (tier: number) => {
+  fetchCourse: async (tier) => {
     set({ isLoading: true, error: null });
     try {
       await new Promise(resolve => setTimeout(resolve, 300));
       const course = demoCourses.find(c => c.tier === tier) || null;
       set({ currentCourse: course, isLoading: false });
-    } catch (error: any) {
+    } catch (error) {
       set({ 
         error: error.response?.data?.message || 'Failed to fetch course',
         isLoading: false 
@@ -155,12 +111,11 @@ export const useCourseStore = create<CourseState>((set, get) => ({
     }
   },
 
-  fetchSprint: async (sprintId: string) => {
+  fetchSprint: async (sprintId) => {
     set({ isLoading: true, error: null });
     try {
       await new Promise(resolve => setTimeout(resolve, 300));
-      // Find sprint in all courses
-      let sprint: Sprint | null = null;
+      let sprint = null;
       for (const course of demoCourses) {
         const found = course.sprints.find(s => s.id === sprintId);
         if (found) {
@@ -169,7 +124,7 @@ export const useCourseStore = create<CourseState>((set, get) => ({
         }
       }
       set({ currentSprint: sprint, isLoading: false });
-    } catch (error: any) {
+    } catch (error) {
       set({ 
         error: error.response?.data?.message || 'Failed to fetch sprint',
         isLoading: false 
@@ -181,15 +136,14 @@ export const useCourseStore = create<CourseState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       await new Promise(resolve => setTimeout(resolve, 300));
-      // Mock progress - some sprints completed
-      const mockProgress: UserProgress = {
+      const mockProgress = {
         currentTier: 2,
         completedSprints: ['s1', 's2', 's4'],
         totalSprintsCompleted: 3,
         lastActive: new Date(),
       };
       set({ progress: mockProgress, isLoading: false });
-    } catch (error: any) {
+    } catch (error) {
       set({ 
         error: error.response?.data?.message || 'Failed to fetch progress',
         isLoading: false 
@@ -197,7 +151,7 @@ export const useCourseStore = create<CourseState>((set, get) => ({
     }
   },
 
-  markSprintComplete: async (sprintId: string) => {
+  markSprintComplete: async (sprintId) => {
     set({ isLoading: true, error: null });
     try {
       await new Promise(resolve => setTimeout(resolve, 500));
@@ -210,7 +164,7 @@ export const useCourseStore = create<CourseState>((set, get) => ({
         };
         set({ progress: updatedProgress, isLoading: false });
       }
-    } catch (error: any) {
+    } catch (error) {
       set({ 
         error: error.response?.data?.message || 'Failed to mark sprint complete',
         isLoading: false 

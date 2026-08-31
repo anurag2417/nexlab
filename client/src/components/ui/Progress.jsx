@@ -1,16 +1,7 @@
 import React from 'react';
 import { cn } from '../../utils/cn';
 
-interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
-  value?: number;
-  max?: number;
-  color?: 'default' | 'success' | 'warning' | 'danger';
-  showLabel?: boolean;
-  label?: string;
-  size?: 'sm' | 'md' | 'lg';
-}
-
-export const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
+export const Progress = React.forwardRef(
   ({ 
     className, 
     value = 0, 
