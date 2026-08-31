@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const userSchema = new Schema(
@@ -77,7 +77,7 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-// Hash password before saving
+// Hash password before saving - using bcryptjs
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   const salt = await bcrypt.genSalt(10);
@@ -85,7 +85,7 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// Compare password method
+// Compare password method - using bcryptjs
 userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };

@@ -5,6 +5,14 @@ export const register = async (req, res) => {
   try {
     const { name, email, password, school, grade, city, state } = req.body;
 
+    // Validate input
+    if (!name || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide name, email and password',
+      });
+    }
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({
@@ -42,7 +50,7 @@ export const register = async (req, res) => {
     logger.error('Register error:', error);
     res.status(500).json({
       success: false,
-      message: 'Server error during registration',
+      message: error.message || 'Server error during registration',
     });
   }
 };
@@ -96,7 +104,7 @@ export const login = async (req, res) => {
     logger.error('Login error:', error);
     res.status(500).json({
       success: false,
-      message: 'Server error during login',
+      message: error.message || 'Server error during login',
     });
   }
 };
@@ -128,7 +136,7 @@ export const getMe = async (req, res) => {
     logger.error('Get me error:', error);
     res.status(500).json({
       success: false,
-      message: 'Server error',
+      message: error.message || 'Server error',
     });
   }
 };
