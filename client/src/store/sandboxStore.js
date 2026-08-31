@@ -16,15 +16,12 @@ export const useSandboxStore = create((set, get) => ({
   executeCode: async (data) => {
     set({ isRunning: true, error: null, output: 'Running...' });
     try {
-      // Mock execution
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Check if code is empty
       if (!data.code || data.code.trim() === '') {
         throw new Error('Please write some code first');
       }
 
-      // Simple mock output
       const mockOutput = `✅ Code executed successfully!\n\nOutput:\n${data.code.split('\n').slice(0, 3).join('\n')}`;
       
       set({

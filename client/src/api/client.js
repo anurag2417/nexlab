@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-// This will use the correct URL based on environment
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-console.log('🔗 API URL:', API_URL); // Helps with debugging
+console.log('🔗 API URL:', API_URL);
 
 const apiClient = axios.create({
   baseURL: API_URL,

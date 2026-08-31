@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-// Mock user data for testing
 const mockUser = {
   id: '1',
   name: 'Anurag Kumar',
@@ -16,7 +15,7 @@ const mockUser = {
 
 export const useAuthStore = create(
   persist(
-    (set, get) => ({
+    (set) => ({
       user: null,
       token: localStorage.getItem('token') || null,
       isLoading: false,

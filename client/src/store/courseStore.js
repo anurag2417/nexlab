@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 
-// Demo data
 const demoCourses = [
   {
     id: '1',
