@@ -1,16 +1,25 @@
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load .env file
+dotenv.config({ path: path.join(__dirname, '../.env') });
+
 import app from './app.js';
 import connectDB from './config/database.js';
 import logger from './utils/logger.js';
 
-dotenv.config();
-
-process.on('uncaughtException', (err) => {
+// Handle uncaught exceptions
+process.on('uncaughtException', (err: Error) => {
   logger.error('UNCAUGHT EXCEPTION! 💥 Shutting down...');
   logger.error(err.name, err.message, err.stack);
   process.exit(1);
 });
 
+// Connect to database
 connectDB();
 
 const PORT = process.env.PORT || 5000;
@@ -19,6 +28,7 @@ const server = app.listen(PORT, () => {
   logger.info(`📍 Environment: ${process.env.NODE_ENV}`);
 });
 
+// Handle unhandled promise rejections
 process.on('unhandledRejection', (err: Error) => {
   logger.error('UNHANDLED REJECTION! 💥 Shutting down...');
   logger.error(err.name, err.message);
@@ -27,6 +37,7 @@ process.on('unhandledRejection', (err: Error) => {
   });
 });
 
+// Graceful shutdown
 process.on('SIGTERM', () => {
   logger.info('👋 SIGTERM received. Shutting down gracefully');
   server.close(() => {

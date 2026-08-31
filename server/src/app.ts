@@ -14,7 +14,6 @@ import projectRoutes from './routes/projectRoutes.js';
 import leaderboardRoutes from './routes/leaderboardRoutes.js';
 
 import errorHandler from './middleware/errorHandler.js';
-import { AppError } from './middleware/errorHandler.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -83,7 +82,7 @@ app.use((req: Request, res: Response) => {
 });
 
 // Global error handler
-app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   errorHandler(err, req, res, next);
 });
 
