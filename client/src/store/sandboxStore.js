@@ -26,22 +26,44 @@ export const useSandboxStore = create((set, get) => ({
         const response = await sandboxAPI.executeCode(data);
         const result = response.data;
         
+        // Check if there's an error from Python execution
+        if (result.error) {
+          set({
+            output: '',
+            executionTime: result.executionTime || 0,
+            isRunning: false,
+            error: result.error,
+          });
+          return { success: false, error: result.error };
+        }
+        
         set({
           output: result.output || '✅ Code executed successfully!',
           executionTime: result.executionTime || 0,
           isRunning: false,
-          error: result.error || null,
+          error: null,
         });
         
         return { success: true, result };
       } catch (apiError) {
-        console.warn('⚠️ API execution failed, using mock execution:', apiError.message);
+        console.warn('⚠️ API execution failed:', apiError.message);
+        
+        // Check if it's a network error or Python not found
+        if (apiError.message?.includes('Python not found')) {
+          set({
+            output: '',
+            isRunning: false,
+            error: 'Python is not installed on the server. Please contact support.',
+          });
+          return { success: false, error: 'Python not found on server' };
+        }
+        
         // Fallback to mock execution if API fails
         return await get().mockExecute(data);
       }
     } catch (error) {
       set({
-        output: `❌ Error: ${error.message || 'Execution failed'}`,
+        output: '',
         isRunning: false,
         error: error.message || 'Execution failed',
       });
@@ -58,9 +80,9 @@ export const useSandboxStore = create((set, get) => ({
         // Check for common errors
         if (code.includes('import os') || code.includes('import subprocess')) {
           set({
-            output: '❌ Security Error: System imports are not allowed',
+            output: '',
             isRunning: false,
-            error: 'Security violation',
+            error: '❌ Security Error: System imports are not allowed',
           });
           resolve({ success: false, error: 'Security violation' });
           return;
@@ -68,33 +90,49 @@ export const useSandboxStore = create((set, get) => ({
 
         // Simple mock output
         let output = '';
+        let error = null;
+        
         try {
+          // Simulate Python code execution
           if (code.includes('print(')) {
-            const match = code.match(/print\(['"](.+)['"]\)/);
+            // Extract what's inside print()
+            const match = code.match(/print\((['"])(.+)\1\)/);
             if (match) {
-              output = match[1];
+              output = match[2];
             } else {
-              output = 'Hello from your code!';
+              const match2 = code.match(/print\((.+)\)/);
+              if (match2) {
+                // If it's a variable or expression
+                if (match2[1] === '"Hello World"' || match2[1] === "'Hello World'") {
+                  output = 'Hello World';
+                } else {
+                  output = `✅ Code executed: ${match2[1]}`;
+                }
+              } else {
+                output = '✅ Code executed successfully!';
+              }
             }
           } else if (code.includes('def ')) {
             output = '✅ Function defined successfully!';
           } else if (code.includes('class ')) {
             output = '✅ Class defined successfully!';
+          } else if (code.trim() === '') {
+            error = '❌ Error: No code to execute';
           } else {
             output = '✅ Code executed successfully!';
           }
-        } catch {
-          output = '✅ Code executed successfully!';
+        } catch (e) {
+          error = `❌ Error: ${e.message}`;
         }
 
         set({
           output: output,
+          error: error,
           executionTime: 0.3 + Math.random() * 0.5,
           isRunning: false,
-          error: null,
         });
         
-        resolve({ success: true, output });
+        resolve({ success: !error, output, error });
       }, 1000 + Math.random() * 500);
     });
   },

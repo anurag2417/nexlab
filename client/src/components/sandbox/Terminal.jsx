@@ -38,6 +38,13 @@ export const Terminal = ({
     return 'text-gray-500';
   };
 
+  // Check if error is about Python not found
+  const isPythonNotFound = error && (
+    error.includes('Python not found') || 
+    error.includes('python') ||
+    error.includes('not installed')
+  );
+
   return (
     <div className={cn('flex flex-col h-full bg-[#1a1a2e]', className)}>
       {/* Terminal Header */}
@@ -77,7 +84,21 @@ export const Terminal = ({
           </div>
         )}
         
-        {error && (
+        {error && isPythonNotFound && (
+          <div className="space-y-2">
+            <div className="text-red-400 font-semibold">❌ Python Not Available</div>
+            <div className="text-yellow-400 text-sm bg-yellow-950/30 p-3 rounded-lg border border-yellow-800/30">
+              <p className="mb-1">⚠️ Python is not installed on this server.</p>
+              <p className="text-gray-400 text-xs mt-2">This is a mock execution environment. Your code is being simulated.</p>
+              <p className="text-gray-400 text-xs mt-1">To use real Python execution, please set up Python on the server.</p>
+            </div>
+            <pre className="text-red-300 whitespace-pre-wrap bg-red-950/30 p-3 rounded-lg border border-red-800/30 text-xs">
+              {error}
+            </pre>
+          </div>
+        )}
+        
+        {error && !isPythonNotFound && (
           <div className="space-y-1">
             <div className="text-red-400 font-semibold">❌ Error:</div>
             <pre className="text-red-300 whitespace-pre-wrap bg-red-950/30 p-3 rounded-lg border border-red-800/30">

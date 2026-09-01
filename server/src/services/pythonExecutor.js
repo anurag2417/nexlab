@@ -10,6 +10,20 @@ class PythonExecutor {
     this.tempDir = path.join(os.tmpdir(), 'nexlab-sandbox');
     this.maxExecutionTime = parseInt(process.env.EXECUTION_TIMEOUT || '10000');
     this.maxOutputSize = 5 * 1024 * 1024; // 5MB
+    this.pythonPath = this.getPythonPath();
+  }
+
+  getPythonPath() {
+    // Try different Python paths
+    const possiblePaths = [
+      'python3',
+      'python',
+      '/usr/bin/python3',
+      '/usr/bin/python',
+      '/usr/local/bin/python3',
+      '/usr/local/bin/python',
+    ];
+    return possiblePaths;
   }
 
   async execute(code, timeout) {
@@ -23,10 +37,7 @@ class PythonExecutor {
       await fs.writeFile(scriptPath, sanitizedCode, 'utf-8');
 
       const startTime = Date.now();
-      const result = await this.runPythonScript(
-        scriptPath,
-        timeout || this.maxExecutionTime
-      );
+      const result = await this.runPythonScript(scriptPath, timeout || this.maxExecutionTime);
       const executionTime = Date.now() - startTime;
 
       await this.cleanup(scriptPath);
@@ -50,9 +61,31 @@ class PythonExecutor {
     }
   }
 
-  runPythonScript(scriptPath, timeout) {
+  async runPythonScript(scriptPath, timeout) {
+    // Try each Python path
+    for (const pythonPath of this.pythonPath) {
+      try {
+        const result = await this.tryExecute(pythonPath, scriptPath, timeout);
+        if (result.success || result.exitCode !== 127) {
+          return result;
+        }
+      } catch (error) {
+        // Continue to next Python path
+        continue;
+      }
+    }
+
+    // If all paths fail, return a helpful error message
+    return {
+      success: false,
+      output: '',
+      error: 'Python is not installed on the server. Please contact support.',
+      exitCode: 127,
+    };
+  }
+
+  tryExecute(pythonPath, scriptPath, timeout) {
     return new Promise((resolve) => {
-      const pythonPath = process.env.PYTHON_PATH || 'python3';
       const command = `${pythonPath} ${scriptPath}`;
 
       const childProcess = exec(
@@ -84,6 +117,16 @@ class PythonExecutor {
             });
           }
 
+          // Check if it's a "command not found" error (exit code 127)
+          if (error.code === 127) {
+            return resolve({
+              success: false,
+              output: '',
+              error: `Python not found at: ${pythonPath}`,
+              exitCode: 127,
+            });
+          }
+
           return resolve({
             success: false,
             output: stdout || '',
@@ -93,7 +136,7 @@ class PythonExecutor {
         }
       );
 
-      logger.debug(`Python process started: PID ${childProcess.pid}`);
+      logger.debug(`Python process started: PID ${childProcess.pid} using ${pythonPath}`);
     });
   }
 

@@ -16,6 +16,19 @@ export const runCode = async (req, res) => {
 
     const result = await pythonExecutor.execute(code);
 
+    // Check if Python execution failed due to Python not being installed
+    if (result.error && result.error.includes('Python not found')) {
+      return res.status(200).json({
+        success: false,
+        data: {
+          output: '',
+          error: 'Python is not installed on the server. Please contact support.',
+          executionTime: result.executionTime,
+          exitCode: result.exitCode,
+        },
+      });
+    }
+
     res.status(200).json({
       success: result.success,
       data: {
