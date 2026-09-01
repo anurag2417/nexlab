@@ -30,6 +30,8 @@ const Sandbox = () => {
     saveCode,
     loadSavedCode,
     downloadCode,
+    isHtmlOutput,
+    htmlContent,
   } = useSandbox();
   const { currentSprint, fetchSprint, isLoading, markSprintComplete, progress } = useCourseStore();
   const { addToast } = useToast();
@@ -43,13 +45,13 @@ const Sandbox = () => {
       fetchSprint(sprintId);
       loadSavedCode(sprintId);
     }
-  }, [sprintId]);
+  }, [sprintId, fetchSprint, loadSavedCode]);
 
   useEffect(() => {
     if (currentSprint?.starterCode && !code) {
       setCode(currentSprint.starterCode);
     }
-  }, [currentSprint]);
+  }, [currentSprint, code, setCode]);
 
   useEffect(() => {
     if (progress?.completedSprints?.includes(sprintId)) {
@@ -71,7 +73,11 @@ const Sandbox = () => {
     });
     
     if (result?.success) {
-      addToast('✅ Code executed successfully!', 'success');
+      if (isHtmlOutput) {
+        addToast('✅ HTML rendered successfully!', 'success');
+      } else {
+        addToast('✅ Code executed successfully!', 'success');
+      }
     } else if (result?.error) {
       addToast('❌ Code execution failed', 'error');
     }
@@ -101,7 +107,7 @@ const Sandbox = () => {
       return;
     }
     
-    downloadCode(code, `sprint_${sprintId}.py`);
+    downloadCode(code, `sprint_${sprintId}`);
     addToast('📥 Code downloaded!', 'success');
   };
 
@@ -260,6 +266,11 @@ const Sandbox = () => {
                 <Badge variant="outline" className="text-[10px] border-[#A3B18A] text-[#A3B18A] py-0 px-1.5">
                   Python 3.9
                 </Badge>
+                {isHtmlOutput && (
+                  <Badge variant="outline" className="text-[10px] border-blue-400 text-blue-400 py-0 px-1.5">
+                    HTML
+                  </Badge>
+                )}
               </div>
               <Controls
                 onRun={handleRun}
@@ -282,18 +293,20 @@ const Sandbox = () => {
               <CodeEditor 
                 value={code} 
                 onChange={setCode}
-                language="python"
+                language={isHtmlOutput ? 'html' : 'python'}
                 theme="vs-dark"
                 height="100%"
               />
             </div>
 
-            <div className="h-36 rounded-lg border border-[#DAD7CD]/30 overflow-hidden">
+            <div className="h-48 rounded-lg border border-[#DAD7CD]/30 overflow-hidden">
               <Terminal 
                 output={output} 
                 error={error}
                 isRunning={isRunning}
                 executionTime={executionTime}
+                isHtmlOutput={isHtmlOutput}
+                htmlContent={htmlContent}
               />
             </div>
           </div>

@@ -10,29 +10,55 @@ export const useSandboxStore = create((set, get) => ({
   history: [],
   isHistoryLoading: false,
   savedCodes: {},
+  isHtmlOutput: false,
+  htmlContent: '',
 
   setCode: (code) => set({ code }),
 
   setOutput: (output) => set({ output }),
 
-  clearOutput: () => set({ output: '', error: null, executionTime: null }),
+  clearOutput: () => set({ output: '', error: null, executionTime: null, isHtmlOutput: false, htmlContent: '' }),
 
   executeCode: async (data) => {
-    set({ isRunning: true, error: null, output: '⏳ Running your code...' });
+    set({ isRunning: true, error: null, output: '⏳ Running your code...', isHtmlOutput: false, htmlContent: '' });
     
     try {
+      // Check if it's HTML code
+      const isHtml = data.code && (
+        data.code.includes('<!DOCTYPE html>') || 
+        data.code.includes('<html') ||
+        data.code.includes('<body') ||
+        data.code.includes('<h1') ||
+        data.code.includes('<p')
+      );
+
+      if (isHtml) {
+        // For HTML code, render it in an iframe
+        const htmlContent = data.code;
+        set({
+          isHtmlOutput: true,
+          htmlContent: htmlContent,
+          isRunning: false,
+          error: null,
+          output: '✅ HTML rendered successfully!',
+          executionTime: 0.2,
+        });
+        return { success: true, output: htmlContent };
+      }
+
       // Try real backend execution first
       try {
         const response = await sandboxAPI.executeCode(data);
         const result = response.data;
         
-        // Check if there's an error from Python execution
         if (result.error) {
           set({
             output: '',
             executionTime: result.executionTime || 0,
             isRunning: false,
             error: result.error,
+            isHtmlOutput: false,
+            htmlContent: '',
           });
           return { success: false, error: result.error };
         }
@@ -42,23 +68,13 @@ export const useSandboxStore = create((set, get) => ({
           executionTime: result.executionTime || 0,
           isRunning: false,
           error: null,
+          isHtmlOutput: false,
+          htmlContent: '',
         });
         
         return { success: true, result };
       } catch (apiError) {
         console.warn('⚠️ API execution failed:', apiError.message);
-        
-        // Check if it's a network error or Python not found
-        if (apiError.message?.includes('Python not found')) {
-          set({
-            output: '',
-            isRunning: false,
-            error: 'Python is not installed on the server. Please contact support.',
-          });
-          return { success: false, error: 'Python not found on server' };
-        }
-        
-        // Fallback to mock execution if API fails
         return await get().mockExecute(data);
       }
     } catch (error) {
@@ -66,6 +82,8 @@ export const useSandboxStore = create((set, get) => ({
         output: '',
         isRunning: false,
         error: error.message || 'Execution failed',
+        isHtmlOutput: false,
+        htmlContent: '',
       });
       return { success: false, error: error.message };
     }
@@ -76,53 +94,41 @@ export const useSandboxStore = create((set, get) => ({
     return new Promise((resolve) => {
       setTimeout(() => {
         const code = data.code || '';
-        
-        // Check for common errors
-        if (code.includes('import os') || code.includes('import subprocess')) {
-          set({
-            output: '',
-            isRunning: false,
-            error: '❌ Security Error: System imports are not allowed',
-          });
-          resolve({ success: false, error: 'Security violation' });
-          return;
-        }
-
-        // Simple mock output
         let output = '';
         let error = null;
-        
-        try {
-          // Simulate Python code execution
-          if (code.includes('print(')) {
-            // Extract what's inside print()
-            const match = code.match(/print\((['"])(.+)\1\)/);
-            if (match) {
-              output = match[2];
-            } else {
-              const match2 = code.match(/print\((.+)\)/);
-              if (match2) {
-                // If it's a variable or expression
-                if (match2[1] === '"Hello World"' || match2[1] === "'Hello World'") {
-                  output = 'Hello World';
-                } else {
-                  output = `✅ Code executed: ${match2[1]}`;
-                }
-              } else {
-                output = '✅ Code executed successfully!';
-              }
-            }
-          } else if (code.includes('def ')) {
-            output = '✅ Function defined successfully!';
-          } else if (code.includes('class ')) {
-            output = '✅ Class defined successfully!';
-          } else if (code.trim() === '') {
-            error = '❌ Error: No code to execute';
+        let isHtmlOutput = false;
+        let htmlContent = '';
+
+        // Check if it's HTML
+        if (code.includes('<!DOCTYPE html>') || code.includes('<html') || 
+            code.includes('<body') || code.includes('<h1') || code.includes('<p')) {
+          isHtmlOutput = true;
+          htmlContent = code;
+          output = '✅ HTML rendered successfully!';
+        } else if (code.includes('print(')) {
+          const match = code.match(/print\((['"])(.+)\1\)/);
+          if (match) {
+            output = match[2];
           } else {
-            output = '✅ Code executed successfully!';
+            const match2 = code.match(/print\((.+)\)/);
+            if (match2) {
+              if (match2[1] === '"Hello World"' || match2[1] === "'Hello World'") {
+                output = 'Hello World';
+              } else {
+                output = `✅ Code executed: ${match2[1]}`;
+              }
+            } else {
+              output = '✅ Code executed successfully!';
+            }
           }
-        } catch (e) {
-          error = `❌ Error: ${e.message}`;
+        } else if (code.includes('def ')) {
+          output = '✅ Function defined successfully!';
+        } else if (code.includes('class ')) {
+          output = '✅ Class defined successfully!';
+        } else if (code.trim() === '') {
+          error = '❌ Error: No code to execute';
+        } else {
+          output = '✅ Code executed successfully!';
         }
 
         set({
@@ -130,6 +136,8 @@ export const useSandboxStore = create((set, get) => ({
           error: error,
           executionTime: 0.3 + Math.random() * 0.5,
           isRunning: false,
+          isHtmlOutput: isHtmlOutput,
+          htmlContent: htmlContent,
         });
         
         resolve({ success: !error, output, error });
@@ -167,11 +175,19 @@ export const useSandboxStore = create((set, get) => ({
   },
 
   downloadCode: (code, filename = 'script.py') => {
-    const blob = new Blob([code], { type: 'text/plain' });
+    // Determine file extension
+    let ext = '.py';
+    let mimeType = 'text/plain';
+    if (code.includes('<!DOCTYPE html>') || code.includes('<html')) {
+      ext = '.html';
+      mimeType = 'text/html';
+    }
+    
+    const blob = new Blob([code], { type: mimeType });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = filename;
+    a.download = filename.replace('.py', ext);
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
