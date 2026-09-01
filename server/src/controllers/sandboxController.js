@@ -12,17 +12,17 @@ export const runCode = async (req, res) => {
       });
     }
 
+    logger.info(`Code execution by user ${req.user.id} for sprint ${sprintId}`);
+
     const result = await pythonExecutor.execute(code);
 
-    logger.info(`Code execution by user ${req.user.id}: ${result.executionTime}ms`);
-
     res.status(200).json({
-      success: true,
+      success: result.success,
       data: {
         output: result.output,
-        executionTime: result.executionTime,
-        success: result.success,
         error: result.error,
+        executionTime: result.executionTime,
+        exitCode: result.exitCode,
       },
     });
   } catch (error) {

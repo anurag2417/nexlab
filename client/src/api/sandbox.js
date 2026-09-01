@@ -13,6 +13,6 @@ export const sandboxAPI = {
 
   getHistory: async () => {
     const response = await apiClient.get('/sandbox/history');
-    return response.data.data;
+    return response.data;
   },
 };

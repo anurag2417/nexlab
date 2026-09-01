@@ -18,20 +18,19 @@ const Sandbox = () => {
   const { sprintId } = useParams();
   const navigate = useNavigate();
   const { user, getCurrentUser } = useAuthStore();
-  const {
-    code,
-    setCode,
-    output,
-    isRunning,
+  const { 
+    code, 
+    setCode, 
+    output, 
+    isRunning, 
     error,
     executionTime,
-    executeCode,
+    executeCode, 
     clearOutput,
     saveCode,
     loadSavedCode,
     downloadCode,
-  } = useSandbox(); // make sure loadSavedCode is included here
-
+  } = useSandbox();
   const { currentSprint, fetchSprint, isLoading, markSprintComplete, progress } = useCourseStore();
   const { addToast } = useToast();
   const [isCompleted, setIsCompleted] = useState(false);
@@ -40,11 +39,10 @@ const Sandbox = () => {
 
   useEffect(() => {
     if (sprintId) {
-      console.log('🔍 Fetching sprint:', sprintId);
       fetchSprint(sprintId);
       loadSavedCode(sprintId);
     }
-  }, [sprintId, fetchSprint, loadSavedCode]);
+  }, [sprintId]);
 
   useEffect(() => {
     if (currentSprint?.starterCode && !code) {
@@ -63,14 +61,14 @@ const Sandbox = () => {
       addToast('Please write some code first', 'warning');
       return;
     }
-
+    
     clearOutput();
-    const result = await executeCode({
-      code,
+    const result = await executeCode({ 
+      code, 
       sprintId,
-      userId: user?.id
+      userId: user?.id 
     });
-
+    
     if (result?.success) {
       addToast('✅ Code executed successfully!', 'success');
     } else if (result?.error) {
@@ -91,7 +89,7 @@ const Sandbox = () => {
       addToast('Nothing to save. Write some code first.', 'warning');
       return;
     }
-
+    
     await saveCode(sprintId, code);
     addToast('💾 Code saved successfully!', 'success');
   };
@@ -101,7 +99,7 @@ const Sandbox = () => {
       addToast('Nothing to download. Write some code first.', 'warning');
       return;
     }
-
+    
     downloadCode(code, `sprint_${sprintId}.py`);
     addToast('📥 Code downloaded!', 'success');
   };
@@ -111,14 +109,14 @@ const Sandbox = () => {
       addToast('✅ Sprint already completed!', 'info');
       return;
     }
-
+    
     setIsSubmitting(true);
     try {
       await markSprintComplete(sprintId);
       setIsCompleted(true);
       addToast('🎉 Sprint completed! +50 XP!', 'success');
       await getCurrentUser();
-
+      
       setTimeout(() => {
         navigate('/courses');
       }, 2000);
@@ -200,8 +198,8 @@ const Sandbox = () => {
               onClick={handleMarkComplete}
               disabled={isSubmitting || isCompleted}
               className={cn(
-                isCompleted
-                  ? 'bg-green-600 hover:bg-green-700'
+                isCompleted 
+                  ? 'bg-green-600 hover:bg-green-700' 
                   : 'gradient-button'
               )}
             >
@@ -257,9 +255,9 @@ const Sandbox = () => {
               </div>
             )}
 
-            <div className="flex-1 overflow-hidden rounded-lg border border-[#DAD7CD]/30 bg-[#344E41]">
-              <CodeEditor
-                value={code}
+            <div className="flex-1 overflow-hidden rounded-lg border border-[#DAD7CD]/30 bg-[#1a1a2e]">
+              <CodeEditor 
+                value={code} 
                 onChange={setCode}
                 language="python"
                 theme="vs-dark"
@@ -267,20 +265,12 @@ const Sandbox = () => {
               />
             </div>
 
-            <div className="h-40 rounded-lg border border-[#DAD7CD]/30 bg-[#344E41] overflow-hidden">
-              <div className="flex items-center justify-between border-b border-[#DAD7CD]/10 px-4 py-2">
-                <span className="text-sm text-[#DAD7CD]/60 font-mono">Terminal</span>
-                <button
-                  onClick={clearOutput}
-                  className="text-xs text-[#DAD7CD]/40 hover:text-[#DAD7CD]/80 transition-colors"
-                >
-                  Clear
-                </button>
-              </div>
-              <Terminal
-                output={output}
+            <div className="h-48 rounded-lg border border-[#DAD7CD]/30 overflow-hidden">
+              <Terminal 
+                output={output} 
                 error={error}
                 isRunning={isRunning}
+                executionTime={executionTime}
               />
             </div>
           </div>

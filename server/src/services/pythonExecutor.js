@@ -78,7 +78,7 @@ class PythonExecutor {
           if (!error) {
             return resolve({
               success: true,
-              output: stdout.trim() || 'No output',
+              output: stdout.trim() || '✅ Code executed successfully!',
               error: null,
               exitCode: 0,
             });
