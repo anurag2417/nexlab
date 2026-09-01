@@ -160,10 +160,11 @@ const Courses = () => {
                   (sprintId) => course.sprints?.some((s) => s.id === sprintId)
                 )?.length || 0;
                 const totalSprints = course.sprints?.length || 0;
-                const progressPercent = totalSprints > 0 
-                  ? (completedSprints / totalSprints) * 100 
+                const progressPercent = totalSprints > 0
+                  ? (completedSprints / totalSprints) * 100
                   : 0;
                 const isLocked = course.tier > 1 && (!progress || progress?.completedSprints?.length === 0);
+                const firstSprintId = course.sprints?.[0]?.id || course.id;
 
                 return (
                   <CourseCard
@@ -178,6 +179,7 @@ const Courses = () => {
                     totalSprints={totalSprints}
                     completedSprints={completedSprints}
                     isLocked={isLocked}
+                    firstSprintId={firstSprintId} // Add this
                   />
                 );
               })

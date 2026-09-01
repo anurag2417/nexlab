@@ -40,8 +40,9 @@ const Sandbox = () => {
 
   useEffect(() => {
     if (sprintId) {
+      console.log('🔍 Fetching sprint:', sprintId);
       fetchSprint(sprintId);
-      loadSavedCode(sprintId); // This should now work
+      loadSavedCode(sprintId);
     }
   }, [sprintId, fetchSprint, loadSavedCode]);
 

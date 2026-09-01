@@ -17,8 +17,8 @@ const fullCourses = [
       'Create a personal portfolio',
     ],
     sprints: [
-      { 
-        id: 's1', 
+      {
+        id: '1',
         title: 'Introduction to the Internet',
         description: 'Learn how the internet works and how websites are created.',
         content: `
@@ -58,8 +58,8 @@ const fullCourses = [
           'Create your first webpage',
         ],
       },
-      { 
-        id: 's2', 
+      {
+        id: '2',
         title: 'Build your first webpage',
         description: 'Create a simple webpage with HTML.',
         content: `
@@ -109,8 +109,8 @@ const fullCourses = [
           'Create a complete webpage',
         ],
       },
-      { 
-        id: 's3', 
+      {
+        id: '3',
         title: 'Create a personal portfolio',
         description: 'Build a portfolio page to showcase your work.',
         content: `
@@ -197,8 +197,8 @@ const fullCourses = [
       'Build interactive applications',
     ],
     sprints: [
-      { 
-        id: 's4', 
+      {
+        id: '4',
         title: 'Hello World & Variables',
         description: 'Write your first Python program and learn about variables.',
         content: `
@@ -256,8 +256,8 @@ print(f"Student: {is_student}")`,
           'Use f-strings for formatting',
         ],
       },
-      { 
-        id: 's5', 
+      {
+        id: '5',
         title: 'Functions & Conditionals',
         description: 'Learn how to write functions and use conditionals.',
         content: `
@@ -320,8 +320,8 @@ else:
           'Write reusable code',
         ],
       },
-      { 
-        id: 's6', 
+      {
+        id: '6',
         title: 'Build a Calculator App',
         description: 'Create a simple calculator using Python functions.',
         content: `
@@ -389,8 +389,8 @@ print("Division by zero:", divide(10, 0))`,
           'Build a complete application',
         ],
       },
-      { 
-        id: 's7', 
+      {
+        id: '7',
         title: 'Create a Number Guessing Game',
         description: 'Build an interactive game using loops and conditionals.',
         content: `
@@ -470,14 +470,14 @@ export const useCourseStore = create((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       await new Promise(resolve => setTimeout(resolve, 500));
-      set({ 
-        courses: fullCourses, 
-        isLoading: false 
+      set({
+        courses: fullCourses,
+        isLoading: false
       });
     } catch (error) {
-      set({ 
+      set({
         error: error.message || 'Failed to fetch courses',
-        isLoading: false 
+        isLoading: false
       });
     }
   },
@@ -489,9 +489,9 @@ export const useCourseStore = create((set, get) => ({
       const course = fullCourses.find(c => c.tier === tier) || null;
       set({ currentCourse: course, isLoading: false });
     } catch (error) {
-      set({ 
+      set({
         error: error.message || 'Failed to fetch course',
-        isLoading: false 
+        isLoading: false
       });
     }
   },
@@ -510,9 +510,9 @@ export const useCourseStore = create((set, get) => ({
       }
       set({ currentSprint: sprint, isLoading: false });
     } catch (error) {
-      set({ 
+      set({
         error: error.message || 'Failed to fetch sprint',
-        isLoading: false 
+        isLoading: false
       });
     }
   },
@@ -530,9 +530,9 @@ export const useCourseStore = create((set, get) => ({
       };
       set({ progress, isLoading: false });
     } catch (error) {
-      set({ 
+      set({
         error: error.message || 'Failed to fetch progress',
-        isLoading: false 
+        isLoading: false
       });
     }
   },
@@ -551,7 +551,7 @@ export const useCourseStore = create((set, get) => ({
         };
         localStorage.setItem('nexlab_progress', JSON.stringify(updatedProgress));
         set({ progress: updatedProgress, isLoading: false });
-        
+
         // Update user XP in auth store
         try {
           const { useAuthStore } = await import('./authStore');
@@ -573,9 +573,9 @@ export const useCourseStore = create((set, get) => ({
         }
       }
     } catch (error) {
-      set({ 
+      set({
         error: error.message || 'Failed to mark sprint complete',
-        isLoading: false 
+        isLoading: false
       });
     }
   },

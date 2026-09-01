@@ -14,6 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { ToastContainer, useToast } from './components/ui/Toast';
 import ScrollToTop from './components/ui/ScrollToTop';
 import { useAuthStore } from './store/authStore';
+import Debug from './pages/Debug';
 
 function App() {
   const { toasts, removeToast } = useToast();
@@ -53,8 +54,9 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/settings" element={<Settings />} />
+            
           </Route>
-          
+          <Route path="/debug" element={<Debug />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         
