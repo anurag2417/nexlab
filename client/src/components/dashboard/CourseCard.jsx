@@ -20,51 +20,41 @@ export const CourseCard = ({
 }) => {
   const isCompleted = progress === 100 && totalSprints > 0;
 
-  const colorMap = {
-    blue: 'blue',
-    green: 'green',
-    purple: 'purple',
-    orange: 'orange',
-    red: 'red',
-  };
-
-  const bgColor = colorMap[color] || 'blue';
-
   return (
     <Card className={cn(
-      'overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-mid-blue/10 hover:-translate-y-1 bg-white border-light-blue',
+      'overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-moss/5 hover:-translate-y-1 bg-white border-cream/30',
       isLocked && 'opacity-70'
     )}>
-      <div className={`h-1.5 bg-gradient-to-r from-${bgColor}-400 to-${bgColor}-300`} />
+      <div className="h-1.5 bg-gradient-to-r from-moss to-sage" />
       <CardHeader>
         <div className="flex items-center justify-between">
           <span className="text-3xl">{icon}</span>
           <div className="flex items-center gap-2">
-            {isLocked && <Lock className="h-4 w-4 text-gray-400" />}
+            {isLocked && <Lock className="h-4 w-4 text-deepForest/40" />}
             {isCompleted && !isLocked && <CheckCircle className="h-4 w-4 text-green-500" />}
-            <span className={`text-xs font-medium text-${bgColor}-600 bg-${bgColor}-50/80 px-2.5 py-1 rounded-full border border-${bgColor}-200/50`}>
+            <span className="text-xs font-medium text-moss bg-moss/10 px-2.5 py-1 rounded-full border border-moss/20">
               Tier {tier}
             </span>
           </div>
         </div>
-        <CardTitle className="text-lg text-navy group-hover:text-dark-blue transition-colors">
+        <CardTitle className="text-lg text-forest group-hover:text-moss transition-colors">
           {title}
         </CardTitle>
-        <CardDescription className="text-sm text-gray-500 line-clamp-2">
+        <CardDescription className="text-sm text-deepForest/60 line-clamp-2">
           {description}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-500">Progress</span>
-            <span className="font-medium text-navy">{Math.round(progress)}%</span>
+            <span className="text-deepForest/60">Progress</span>
+            <span className="font-medium text-forest">{Math.round(progress)}%</span>
           </div>
           <Progress 
             value={progress} 
             color={isLocked ? 'default' : isCompleted ? 'success' : 'default'} 
           />
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-deepForest/40">
             {completedSprints} of {totalSprints} sprints completed
           </p>
         </div>
@@ -77,8 +67,8 @@ export const CourseCard = ({
               isCompleted && !isLocked 
                 ? 'bg-green-600 hover:bg-green-700 text-white' 
                 : isLocked 
-                  ? 'border-mid-blue text-gray-400 hover:border-dark-blue hover:text-dark-blue' 
-                  : 'bg-gradient-to-r from-dark-blue to-mid-blue text-white hover:shadow-lg hover:shadow-mid-blue/30'
+                  ? 'border-sage text-deepForest/40 hover:border-moss hover:text-moss' 
+                  : 'gradient-button'
             }`}
             disabled={isLocked}
           >

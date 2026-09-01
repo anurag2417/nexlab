@@ -5,18 +5,22 @@
 @layer base {
   :root {
     --background: 255 255 255;
-    --foreground: 13 36 64;
-    --primary: 46 94 153;
-    --primary-light: 123 164 208;
-    --primary-lighter: 231 240 250;
-    --primary-foreground: 255 255 255;
-    --secondary: 123 164 208;
-    --secondary-foreground: 13 36 64;
+    --foreground: 52 78 65;
+    --primary: 88 129 87;
+    --primary-light: 107 158 106;
+    --primary-dark: 74 111 73;
+    --secondary: 163 177 138;
+    --accent: 58 90 64;
+    --cream: 218 215 205;
+    --sage: 163 177 138;
+    --moss: 88 129 87;
+    --forest: 58 90 64;
+    --deepForest: 52 78 65;
     --destructive: 220 38 38;
     --destructive-foreground: 255 255 255;
-    --border: 231 240 250;
-    --input: 231 240 250;
-    --ring: 46 94 153;
+    --border: 218 215 205;
+    --input: 218 215 205;
+    --ring: 88 129 87;
     --radius: 0.5rem;
   }
 
@@ -25,7 +29,7 @@
   }
 
   body {
-    @apply bg-white text-navy antialiased;
+    @apply bg-[#DAD7CD]/20 text-[#344E41] antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
@@ -35,44 +39,106 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-light-blue/50;
+    @apply bg-[#DAD7CD]/30;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-mid-blue rounded-full;
+    @apply bg-[#A3B18A] rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-dark-blue;
+    @apply bg-[#588157];
   }
 }
 
 @layer components {
+  /* Text Gradients */
   .gradient-text {
-    @apply bg-gradient-to-r from-dark-blue to-mid-blue bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-[#588157] to-[#A3B18A] bg-clip-text text-transparent;
   }
 
+  .gradient-text-forest {
+    @apply bg-gradient-to-r from-[#3A5A40] to-[#588157] bg-clip-text text-transparent;
+  }
+
+  .gradient-text-sage {
+    @apply bg-gradient-to-r from-[#A3B18A] to-[#B9C4A6] bg-clip-text text-transparent;
+  }
+
+  /* Background Gradients */
   .gradient-bg {
-    @apply bg-gradient-to-r from-dark-blue via-mid-blue to-light-blue;
+    @apply bg-gradient-to-r from-[#588157] via-[#A3B18A] to-[#DAD7CD];
   }
 
+  .gradient-bg-soft {
+    @apply bg-gradient-to-br from-[#DAD7CD]/30 via-white to-[#A3B18A]/10;
+  }
+
+  .gradient-bg-warm {
+    @apply bg-gradient-to-br from-[#3A5A40]/10 via-[#DAD7CD]/20 to-[#A3B18A]/10;
+  }
+
+  /* Buttons */
   .gradient-button {
-    @apply bg-gradient-to-r from-dark-blue to-mid-blue text-white hover:shadow-lg transition-all duration-300;
+    @apply bg-gradient-to-r from-[#588157] to-[#3A5A40] text-white hover:shadow-lg hover:shadow-[#588157]/30 transition-all duration-300;
   }
 
+  .gradient-button-sage {
+    @apply bg-gradient-to-r from-[#A3B18A] to-[#8A9C6F] text-white hover:shadow-lg hover:shadow-[#A3B18A]/30 transition-all duration-300;
+  }
+
+  .gradient-button-outline {
+    @apply border-2 border-[#A3B18A] text-[#A3B18A] hover:bg-[#A3B18A] hover:text-white transition-all duration-300;
+  }
+
+  /* Cards & Glass */
   .glass-effect {
-    @apply bg-light-blue/80 backdrop-blur-md border border-light-blue/30;
+    @apply bg-white/80 backdrop-blur-md border border-[#DAD7CD]/30;
   }
 
   .card-hover {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-mid-blue/20;
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#588157]/10;
   }
 
+  .card-forest {
+    @apply border border-[#3A5A40]/20 bg-gradient-to-br from-white to-[#DAD7CD]/10;
+  }
+
+  /* Text */
   .section-title {
-    @apply text-3xl sm:text-4xl font-bold text-dark-blue;
+    @apply text-3xl sm:text-4xl font-bold text-[#3A5A40];
   }
 
   .section-subtitle {
-    @apply text-lg text-gray-600 mt-2;
+    @apply text-lg text-[#344E41]/70 mt-2;
+  }
+
+  /* Badges */
+  .badge-moss {
+    @apply bg-[#588157]/10 text-[#4A6F49] border border-[#588157]/20;
+  }
+
+  .badge-sage {
+    @apply bg-[#A3B18A]/10 text-[#8A9C6F] border border-[#A3B18A]/20;
+  }
+
+  .badge-forest {
+    @apply bg-[#3A5A40]/10 text-[#2E4733] border border-[#3A5A40]/20;
+  }
+
+  /* Forest pulse animation */
+  .forest-pulse {
+    animation: forestPulse 3s ease-in-out infinite;
+  }
+}
+
+@keyframes forestPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
   }
 }

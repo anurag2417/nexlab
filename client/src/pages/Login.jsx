@@ -26,8 +26,8 @@ const Login = () => {
   } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '', // Empty - No default
-      password: '', // Empty - No default
+      email: '',
+      password: '',
     },
   });
 
@@ -52,10 +52,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-powderBlush/20 via-white to-petalRouge/10 px-4 py-8">
+    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-cream/20 via-white to-sage/10 px-4 py-8">
       <div className="absolute inset-0 w-full overflow-hidden">
-        <div className="absolute top-0 -left-40 h-[500px] w-[500px] rounded-full bg-powderBlush/40 blur-3xl" />
-        <div className="absolute bottom-0 -right-40 h-[500px] w-[500px] rounded-full bg-petalRouge/20 blur-3xl" />
+        <div className="absolute top-0 -left-40 h-[500px] w-[500px] rounded-full bg-cream/60 blur-3xl" />
+        <div className="absolute bottom-0 -right-40 h-[500px] w-[500px] rounded-full bg-sage/20 blur-3xl" />
       </div>
 
       <motion.div
@@ -64,19 +64,19 @@ const Login = () => {
         transition={{ duration: 0.6 }}
         className="relative z-10 w-full max-w-md"
       >
-        <Card className="border-powderBlush/30 bg-white/80 backdrop-blur-xl shadow-2xl shadow-roseKiss/5">
+        <Card className="border-cream/30 bg-white/80 backdrop-blur-xl shadow-2xl shadow-moss/5">
           <CardHeader>
-            <Link to="/" className="mb-4 inline-flex items-center gap-2 text-sm text-gray-500 hover:text-roseKiss transition-colors">
+            <Link to="/" className="mb-4 inline-flex items-center gap-2 text-sm text-deepForest/60 hover:text-moss transition-colors">
               <ArrowLeft className="h-4 w-4" />
               Back to home
             </Link>
             <div className="flex items-center gap-3">
-              <div className="rounded-full bg-roseKiss/10 p-2.5">
-                <Sparkles className="h-6 w-6 text-roseKiss" />
+              <div className="rounded-full bg-moss/10 p-2.5">
+                <Sparkles className="h-6 w-6 text-moss" />
               </div>
               <div>
-                <CardTitle className="text-2xl text-gray-800">Welcome Back</CardTitle>
-                <CardDescription className="text-gray-500">
+                <CardTitle className="text-2xl text-forest">Welcome Back</CardTitle>
+                <CardDescription className="text-deepForest/60">
                   Sign in to continue your learning journey
                 </CardDescription>
               </div>
@@ -85,34 +85,34 @@ const Login = () => {
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-700">Email</label>
+                <label className="mb-1.5 block text-sm font-medium text-forest">Email</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-deepForest/40" />
                   <Input
                     type="email"
                     placeholder="Enter your email"
                     error={errors.email?.message}
-                    className="pl-9 bg-white border-powderBlush/50 text-gray-800 placeholder:text-gray-400 focus:border-roseKiss focus:ring-2 focus:ring-roseKiss/20"
+                    className="pl-9 bg-white border-cream/50 text-forest placeholder:text-deepForest/40 focus:border-moss focus:ring-2 focus:ring-moss/20"
                     {...register('email')}
                   />
                 </div>
               </div>
               
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-700">Password</label>
+                <label className="mb-1.5 block text-sm font-medium text-forest">Password</label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-deepForest/40" />
                   <Input
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Enter your password"
                     error={errors.password?.message}
-                    className="pl-9 pr-10 bg-white border-powderBlush/50 text-gray-800 placeholder:text-gray-400 focus:border-roseKiss focus:ring-2 focus:ring-roseKiss/20"
+                    className="pl-9 pr-10 bg-white border-cream/50 text-forest placeholder:text-deepForest/40 focus:border-moss focus:ring-2 focus:ring-moss/20"
                     {...register('password')}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-deepForest/40 hover:text-forest transition-colors"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -120,7 +120,7 @@ const Login = () => {
               </div>
               
               <div className="flex items-center justify-between">
-                <Link to="/forgot-password" className="text-sm text-roseKiss hover:text-petalRouge transition-colors font-medium">
+                <Link to="/forgot-password" className="text-sm text-moss hover:text-forest transition-colors font-medium">
                   Forgot password?
                 </Link>
               </div>
@@ -149,7 +149,7 @@ const Login = () => {
               <Button 
                 type="submit" 
                 disabled={isLoading || success} 
-                className="w-full gradient-button-rose py-6 text-base"
+                className="w-full gradient-button py-6 text-base"
               >
                 {isLoading ? (
                   <>
@@ -161,9 +161,9 @@ const Login = () => {
                 )}
               </Button>
 
-              <p className="text-center text-sm text-gray-500">
+              <p className="text-center text-sm text-deepForest/60">
                 Don't have an account?{' '}
-                <Link to="/register" className="font-medium text-roseKiss hover:text-petalRouge transition-colors">
+                <Link to="/register" className="font-medium text-moss hover:text-forest transition-colors">
                   Sign up
                 </Link>
               </p>

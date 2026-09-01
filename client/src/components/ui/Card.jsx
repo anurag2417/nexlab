@@ -4,9 +4,10 @@ import { cn } from '../../utils/cn';
 export const Card = React.forwardRef(
   ({ className, variant = 'default', ...props }, ref) => {
     const variants = {
-      default: 'bg-white border border-gray-200 shadow-sm',
-      glass: 'glass-effect border border-white/20 shadow-lg',
-      outline: 'bg-transparent border border-gray-300',
+      default: 'bg-white border border-cream/30 shadow-sm',
+      glass: 'glass-effect border border-cream/20 shadow-lg',
+      outline: 'bg-transparent border-2 border-sage/30',
+      forest: 'bg-gradient-to-br from-white to-cream/20 border border-moss/20 shadow-sm',
     };
 
     return (
@@ -37,7 +38,7 @@ CardHeader.displayName = 'CardHeader';
 export const CardTitle = React.forwardRef(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn('text-2xl font-semibold leading-none tracking-tight', className)}
+    className={cn('text-2xl font-semibold leading-none tracking-tight text-forest', className)}
     {...props}
   />
 ));
@@ -46,7 +47,7 @@ CardTitle.displayName = 'CardTitle';
 export const CardDescription = React.forwardRef(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn('text-sm text-gray-500', className)}
+    className={cn('text-sm text-deepForest/60', className)}
     {...props}
   />
 ));
@@ -65,5 +66,3 @@ export const CardFooter = React.forwardRef(({ className, ...props }, ref) => (
   />
 ));
 CardFooter.displayName = 'CardFooter';
-
-export default Card;

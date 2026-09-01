@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sparkles, User, LogIn, LogOut, ChevronDown } from 'lucide-react';
+import { Menu, X, User, LogIn, LogOut, ChevronDown, Sparkles } from 'lucide-react';
 import { Button } from './Button';
 import { useAuthStore } from '../../store/authStore';
 import { cn } from '../../utils/cn';
@@ -32,16 +32,16 @@ export const Navbar = () => {
       className={cn(
         'fixed top-0 z-50 w-full transition-all duration-300',
         isScrolled
-          ? 'bg-white/90 backdrop-blur-xl border-b border-light-blue shadow-sm'
+          ? 'bg-white/90 backdrop-blur-xl border-b border-cream/30 shadow-sm'
           : 'bg-transparent'
       )}
     >
       <div className="w-full px-6 sm:px-12 lg:px-20 xl:px-28">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 flex-shrink-0">
-            <Sparkles className="h-7 w-7 text-dark-blue" />
-            <span className="text-xl font-bold text-navy tracking-tight">NexLab</span>
+          <Link to="/" className="flex items-center gap-2 flex-shrink-0 group">
+            <Sparkles className="h-7 w-7 text-moss" />
+            <span className="text-xl font-bold text-forest tracking-tight">NexLab</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -51,13 +51,13 @@ export const Navbar = () => {
               className={cn(
                 'text-sm font-medium transition-colors relative',
                 isActive('/showcase')
-                  ? 'text-dark-blue'
-                  : 'text-gray-600 hover:text-dark-blue'
+                  ? 'text-moss'
+                  : 'text-deepForest/70 hover:text-moss'
               )}
             >
               Showcase
               {isActive('/showcase') && (
-                <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-dark-blue rounded-full" />
+                <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-moss rounded-full" />
               )}
             </Link>
             {user && (
@@ -67,13 +67,13 @@ export const Navbar = () => {
                   className={cn(
                     'text-sm font-medium transition-colors relative',
                     isActive('/dashboard')
-                      ? 'text-dark-blue'
-                      : 'text-gray-600 hover:text-dark-blue'
+                      ? 'text-moss'
+                      : 'text-deepForest/70 hover:text-moss'
                   )}
                 >
                   Dashboard
                   {isActive('/dashboard') && (
-                    <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-dark-blue rounded-full" />
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-moss rounded-full" />
                   )}
                 </Link>
                 <Link
@@ -81,13 +81,13 @@ export const Navbar = () => {
                   className={cn(
                     'text-sm font-medium transition-colors relative',
                     isActive('/courses')
-                      ? 'text-dark-blue'
-                      : 'text-gray-600 hover:text-dark-blue'
+                      ? 'text-moss'
+                      : 'text-deepForest/70 hover:text-moss'
                   )}
                 >
                   Courses
                   {isActive('/courses') && (
-                    <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-dark-blue rounded-full" />
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-moss rounded-full" />
                   )}
                 </Link>
               </>
@@ -100,27 +100,27 @@ export const Navbar = () => {
               <div className="relative">
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center gap-2 rounded-full border border-light-blue/70 bg-white/50 px-3 py-1.5 transition-all hover:border-mid-blue/50 hover:bg-light-blue/30"
+                  className="flex items-center gap-2 rounded-full border border-cream/50 bg-white/50 px-3 py-1.5 transition-all hover:border-moss/30 hover:bg-cream/20"
                 >
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-dark-blue text-white text-sm font-medium">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-moss to-forest text-white text-sm font-medium">
                     {user.name?.charAt(0) || 'U'}
                   </div>
-                  <span className="text-sm text-navy max-w-[100px] truncate">
+                  <span className="text-sm text-deepForest max-w-[100px] truncate">
                     {user.name}
                   </span>
                   <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-56 rounded-xl border border-light-blue/50 bg-white shadow-2xl shadow-mid-blue/10 backdrop-blur-xl overflow-hidden">
-                    <div className="p-3 border-b border-light-blue/50">
-                      <p className="text-sm font-medium text-navy">{user.name}</p>
-                      <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                  <div className="absolute right-0 mt-2 w-56 rounded-xl border border-cream/30 bg-white shadow-2xl shadow-moss/5 backdrop-blur-xl overflow-hidden">
+                    <div className="p-3 border-b border-cream/30">
+                      <p className="text-sm font-medium text-forest">{user.name}</p>
+                      <p className="text-xs text-deepForest/60 truncate">{user.email}</p>
                     </div>
                     <div className="p-1">
                       <Link
                         to="/profile"
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-light-blue hover:text-dark-blue"
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-deepForest/70 transition-colors hover:bg-cream/30 hover:text-forest"
                         onClick={() => setIsDropdownOpen(false)}
                       >
                         <User className="h-4 w-4" />
@@ -128,7 +128,7 @@ export const Navbar = () => {
                       </Link>
                       <Link
                         to="/dashboard"
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-light-blue hover:text-dark-blue"
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-deepForest/70 transition-colors hover:bg-cream/30 hover:text-forest"
                         onClick={() => setIsDropdownOpen(false)}
                       >
                         <Sparkles className="h-4 w-4" />
@@ -136,7 +136,7 @@ export const Navbar = () => {
                       </Link>
                       <Link
                         to="/settings"
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-light-blue hover:text-dark-blue"
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-deepForest/70 transition-colors hover:bg-cream/30 hover:text-forest"
                         onClick={() => setIsDropdownOpen(false)}
                       >
                         <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -146,7 +146,7 @@ export const Navbar = () => {
                         Settings
                       </Link>
                     </div>
-                    <div className="p-1 border-t border-light-blue/50">
+                    <div className="p-1 border-t border-cream/30">
                       <button
                         onClick={() => {
                           logout();
@@ -164,13 +164,13 @@ export const Navbar = () => {
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="ghost" size="sm" className="text-gray-600 hover:text-dark-blue hover:bg-light-blue">
+                  <Button variant="ghost" size="sm" className="text-deepForest/70 hover:text-moss hover:bg-cream/20">
                     <LogIn className="mr-2 h-4 w-4" />
                     Log In
                   </Button>
                 </Link>
                 <Link to="/register">
-                  <Button size="sm" className="bg-gradient-to-r from-dark-blue to-mid-blue text-white hover:shadow-lg hover:shadow-mid-blue/30">
+                  <Button size="sm" className="gradient-button">
                     Start Free
                   </Button>
                 </Link>
@@ -180,7 +180,7 @@ export const Navbar = () => {
 
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden text-gray-600 hover:text-navy transition-colors"
+            className="md:hidden text-deepForest/70 hover:text-forest transition-colors"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -189,11 +189,11 @@ export const Navbar = () => {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="border-t border-light-blue/50 bg-white/95 backdrop-blur-xl px-6 py-6 md:hidden">
+        <div className="border-t border-cream/30 bg-white/95 backdrop-blur-xl px-6 py-6 md:hidden">
           <nav className="flex flex-col gap-4">
             <Link
               to="/showcase"
-              className="text-base font-medium text-gray-600 hover:text-dark-blue transition-colors"
+              className="text-base font-medium text-deepForest/70 hover:text-moss transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Showcase
@@ -202,35 +202,35 @@ export const Navbar = () => {
               <>
                 <Link
                   to="/dashboard"
-                  className="text-base font-medium text-gray-600 hover:text-dark-blue transition-colors"
+                  className="text-base font-medium text-deepForest/70 hover:text-moss transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Dashboard
                 </Link>
                 <Link
                   to="/courses"
-                  className="text-base font-medium text-gray-600 hover:text-dark-blue transition-colors"
+                  className="text-base font-medium text-deepForest/70 hover:text-moss transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Courses
                 </Link>
               </>
             )}
-            <div className="pt-4 border-t border-light-blue/50">
+            <div className="pt-4 border-t border-cream/30">
               {user ? (
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 px-2 py-1">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-dark-blue text-white text-sm font-medium">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-moss to-forest text-white text-sm font-medium">
                       {user.name?.charAt(0) || 'U'}
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-navy">{user.name}</p>
-                      <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                      <p className="text-sm font-medium text-forest">{user.name}</p>
+                      <p className="text-xs text-deepForest/60 truncate">{user.email}</p>
                     </div>
                   </div>
                   <Link
                     to="/profile"
-                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-gray-600 hover:bg-light-blue hover:text-dark-blue transition-colors"
+                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-deepForest/70 hover:bg-cream/30 hover:text-forest transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <User className="h-4 w-4" />
@@ -250,13 +250,13 @@ export const Navbar = () => {
               ) : (
                 <div className="space-y-3">
                   <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Button variant="outline" className="w-full border-mid-blue text-dark-blue hover:bg-light-blue">
+                    <Button variant="outline" className="w-full border-sage text-sage hover:bg-sage hover:text-white">
                       <LogIn className="mr-2 h-4 w-4" />
                       Log In
                     </Button>
                   </Link>
                   <Link to="/register" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Button className="w-full bg-gradient-to-r from-dark-blue to-mid-blue text-white hover:shadow-lg hover:shadow-mid-blue/30">
+                    <Button className="w-full gradient-button">
                       Start Free
                     </Button>
                   </Link>

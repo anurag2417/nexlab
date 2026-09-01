@@ -7,49 +7,57 @@ const features = [
     icon: Brain,
     title: 'Build Real AI Projects',
     description: 'Chatbots, image recognizers, neural networks—you build them from scratch.',
-    gradient: 'from-dark-blue to-mid-blue'
+    color: 'moss',
+    bg: 'bg-moss/10',
   },
   {
     icon: Terminal,
     title: 'Use Professional Tools',
     description: 'Python, PyTorch, Hugging Face, VS Code—the same tools AI engineers use.',
-    gradient: 'from-dark-blue to-mid-blue'
+    color: 'sage',
+    bg: 'bg-sage/10',
   },
   {
     icon: Users,
     title: 'Learn by Doing',
     description: 'No passive lectures. Every session is hands-on coding with real-time feedback.',
-    gradient: 'from-dark-blue to-mid-blue'
+    color: 'forest',
+    bg: 'bg-forest/10',
   },
   {
     icon: Briefcase,
     title: 'Build Your Portfolio',
     description: 'Graduate with 4 complete projects to show employers and universities.',
-    gradient: 'from-dark-blue to-mid-blue'
+    color: 'moss',
+    bg: 'bg-moss/10',
   },
   {
     icon: Zap,
     title: 'Instant Feedback',
     description: 'Run your code and see results immediately. Learn faster with rapid iteration.',
-    gradient: 'from-dark-blue to-mid-blue'
+    color: 'sage',
+    bg: 'bg-sage/10',
   },
   {
     icon: Shield,
     title: 'Guided Learning Path',
     description: 'Step-by-step sprints from beginner to advanced. No getting lost.',
-    gradient: 'from-dark-blue to-mid-blue'
+    color: 'forest',
+    bg: 'bg-forest/10',
   },
   {
     icon: Globe,
     title: 'Indian Context',
     description: 'Curriculum aligned with CBSE and designed for Indian students.',
-    gradient: 'from-dark-blue to-mid-blue'
+    color: 'moss',
+    bg: 'bg-moss/10',
   },
   {
     icon: Award,
     title: 'Earn Certificates',
     description: 'Get recognized for your achievements with digital certificates.',
-    gradient: 'from-dark-blue to-mid-blue'
+    color: 'sage',
+    bg: 'bg-sage/10',
   },
 ];
 
@@ -63,9 +71,9 @@ export const Features = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-3xl font-bold text-navy"
+            className="text-3xl font-bold text-forest"
           >
-            Why <span className="bg-gradient-to-r from-dark-blue to-mid-blue bg-clip-text text-transparent">NexLab</span>?
+            Why <span className="gradient-text">NexLab</span>?
           </motion.h2>
         </div>
 
@@ -77,13 +85,13 @@ export const Features = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.06 }}
               viewport={{ once: true }}
-              className="group relative rounded-2xl border border-light-blue bg-white p-6 backdrop-blur-sm transition-all hover:border-mid-blue hover:shadow-lg hover:shadow-mid-blue/10 hover:-translate-y-1"
+              className="group relative rounded-2xl border border-cream/30 bg-white/80 backdrop-blur-sm p-6 shadow-sm transition-all hover:shadow-xl hover:shadow-moss/5 hover:-translate-y-1"
             >
-              <div className="mb-4 inline-flex rounded-xl bg-light-blue/50 p-3 transition-all group-hover:scale-110">
-                <feature.icon className="h-6 w-6 text-dark-blue" />
+              <div className={`mb-4 inline-flex rounded-xl ${feature.bg} p-3 transition-all group-hover:scale-110`}>
+                <feature.icon className={`h-6 w-6 text-${feature.color}`} />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-navy">{feature.title}</h3>
-              <p className="text-sm text-gray-500 leading-relaxed">{feature.description}</p>
+              <h3 className="mb-2 text-lg font-semibold text-forest">{feature.title}</h3>
+              <p className="text-sm text-deepForest/60 leading-relaxed">{feature.description}</p>
             </motion.div>
           ))}
         </div>
