@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
@@ -13,12 +13,32 @@ import Settings from './pages/Settings';
 import ProtectedRoute from './components/ProtectedRoute';
 import { ToastContainer, useToast } from './components/ui/Toast';
 import ScrollToTop from './components/ui/ScrollToTop';
+import { useAuthStore } from './store/authStore';
 
 function App() {
   const { toasts, removeToast } = useToast();
+  const { getCurrentUser } = useAuthStore();
+
+  // Listen for storage changes
+  useEffect(() => {
+    const handleStorageChange = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        await getCurrentUser();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, [getCurrentUser]);
 
   return (
-    <Router>
+    <Router
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
       <div className="min-h-screen bg-white">
         <Routes>
           <Route path="/" element={<LandingPage />} />

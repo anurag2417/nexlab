@@ -66,7 +66,6 @@ export const useToast = () => {
     const id = Date.now();
     setToasts((prev) => [...prev, { id, message, type, duration }]);
     
-    // Auto remove after duration
     setTimeout(() => {
       removeToast(id);
     }, duration + 500);
