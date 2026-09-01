@@ -2,6 +2,8 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { authAPI } from '../api/auth';
 
+// NO DEMO USER - All users must register
+
 export const useAuthStore = create(
   persist(
     (set, get) => ({
@@ -11,7 +13,7 @@ export const useAuthStore = create(
       error: null,
       isAuthenticated: false,
 
-      // Register user
+      // Register user - No demo accounts
       register: async (userData) => {
         set({ isLoading: true, error: null });
         
@@ -40,7 +42,7 @@ export const useAuthStore = create(
         }
       },
 
-      // Login user
+      // Login user - No demo accounts
       login: async (email, password) => {
         set({ isLoading: true, error: null });
         
@@ -69,7 +71,7 @@ export const useAuthStore = create(
         }
       },
 
-      // Get current user
+      // Get current user - Real data only
       getCurrentUser: async () => {
         const { token } = get();
         if (!token) {

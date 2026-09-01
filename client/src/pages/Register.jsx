@@ -24,6 +24,15 @@ const Register = () => {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: '', // Empty - No default
+      email: '', // Empty - No default
+      password: '', // Empty - No default
+      confirmPassword: '', // Empty - No default
+      school: '', // Empty - No default
+      grade: '', // Empty - No default
+      city: '', // Empty - No default
+    },
   });
 
   const password = watch('password');
@@ -87,7 +96,7 @@ const Register = () => {
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <Input
                     type="text"
-                    placeholder="Your name"
+                    placeholder="Enter your full name"
                     error={errors.name?.message}
                     className="pl-9 bg-white border-powderBlush/50 text-gray-800 placeholder:text-gray-400 focus:border-roseKiss focus:ring-2 focus:ring-roseKiss/20"
                     {...register('name')}
@@ -101,7 +110,7 @@ const Register = () => {
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <Input
                     type="email"
-                    placeholder="you@example.com"
+                    placeholder="Enter your email"
                     error={errors.email?.message}
                     className="pl-9 bg-white border-powderBlush/50 text-gray-800 placeholder:text-gray-400 focus:border-roseKiss focus:ring-2 focus:ring-roseKiss/20"
                     {...register('email')}
@@ -115,7 +124,7 @@ const Register = () => {
                   <School className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <Input
                     type="text"
-                    placeholder="Your school name"
+                    placeholder="Enter your school name"
                     error={errors.school?.message}
                     className="pl-9 bg-white border-powderBlush/50 text-gray-800 placeholder:text-gray-400 focus:border-roseKiss focus:ring-2 focus:ring-roseKiss/20"
                     {...register('school')}
@@ -140,7 +149,7 @@ const Register = () => {
                     <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <Input
                       type="text"
-                      placeholder="Your city"
+                      placeholder="Enter your city"
                       error={errors.city?.message}
                       className="pl-9 bg-white border-powderBlush/50 text-gray-800 placeholder:text-gray-400 focus:border-roseKiss focus:ring-2 focus:ring-roseKiss/20"
                       {...register('city')}
@@ -155,7 +164,7 @@ const Register = () => {
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <Input
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
+                    placeholder="Create a password"
                     error={errors.password?.message}
                     className="pl-9 pr-10 bg-white border-powderBlush/50 text-gray-800 placeholder:text-gray-400 focus:border-roseKiss focus:ring-2 focus:ring-roseKiss/20"
                     {...register('password')}
@@ -176,7 +185,7 @@ const Register = () => {
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <Input
                     type={showConfirmPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
+                    placeholder="Confirm your password"
                     error={errors.confirmPassword?.message}
                     className="pl-9 pr-10 bg-white border-powderBlush/50 text-gray-800 placeholder:text-gray-400 focus:border-roseKiss focus:ring-2 focus:ring-roseKiss/20"
                     {...register('confirmPassword')}
