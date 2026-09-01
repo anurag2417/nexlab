@@ -46,3 +46,10 @@
 {"level":"info","message":"🚀 Server running on port 5000","service":"nexlab-api","timestamp":"2026-09-01 16:52:02"}
 {"level":"info","message":"📍 Environment: development","service":"nexlab-api","timestamp":"2026-09-01 16:52:02"}
 {"level":"info","message":"✅ MongoDB Connected: ac-7cap2hi-shard-00-01.zxnw4av.mongodb.net","service":"nexlab-api","timestamp":"2026-09-01 16:52:02"}
+{"level":"info","message":"🚀 Server running on port 5000","service":"nexlab-api","timestamp":"2026-09-01 16:52:19"}
+{"level":"info","message":"📍 Environment: development","service":"nexlab-api","timestamp":"2026-09-01 16:52:19"}
+{"level":"info","message":"✅ MongoDB Connected: ac-7cap2hi-shard-00-02.zxnw4av.mongodb.net","service":"nexlab-api","timestamp":"2026-09-01 16:52:19"}
+{"level":"info","message":"Code execution by user 6a96ad7578cf4e33ba406182 for sprint 2","service":"nexlab-api","timestamp":"2026-09-01 16:53:34"}
+{"level":"debug","message":"Python process started: PID 16732","service":"nexlab-api","timestamp":"2026-09-01 16:53:34"}
+{"level":"info","message":"Code execution by user 6a96ad7578cf4e33ba406182 for sprint 2","service":"nexlab-api","timestamp":"2026-09-01 16:54:14"}
+{"level":"debug","message":"Python process started: PID 16424","service":"nexlab-api","timestamp":"2026-09-01 16:54:14"}
