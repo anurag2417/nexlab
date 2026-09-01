@@ -50,7 +50,6 @@ const Sandbox = () => {
     }
   }, [currentSprint]);
 
-  // Check if sprint is already completed
   useEffect(() => {
     if (progress?.completedSprints?.includes(sprintId)) {
       setIsCompleted(true);
@@ -116,8 +115,6 @@ const Sandbox = () => {
       await markSprintComplete(sprintId);
       setIsCompleted(true);
       addToast('🎉 Sprint completed! +50 XP!', 'success');
-      
-      // Refresh user data to update XP
       await getCurrentUser();
       
       setTimeout(() => {
@@ -164,7 +161,6 @@ const Sandbox = () => {
   return (
     <DashboardLayout>
       <div className="space-y-4">
-        {/* Header */}
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-3">
             <Button
@@ -224,16 +220,12 @@ const Sandbox = () => {
           </div>
         </div>
 
-        {/* Main Sandbox Area */}
         <div className="flex h-[calc(100vh-200px)] flex-col gap-4 lg:flex-row">
-          {/* Left: Lesson */}
           <div className="flex-1 overflow-auto rounded-lg border border-[#DAD7CD]/30 bg-white p-4 lg:w-1/2">
             <LessonViewer sprint={currentSprint} isCompleted={isCompleted} />
           </div>
 
-          {/* Right: Code Editor + Terminal */}
           <div className="flex flex-1 flex-col gap-4 lg:w-1/2">
-            {/* Controls */}
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <span className="text-sm text-[#344E41]/60 font-mono">main.py</span>
@@ -257,14 +249,12 @@ const Sandbox = () => {
               />
             </div>
 
-            {/* Hint */}
             {showHint && currentSprint.hint && (
               <div className="rounded-lg border border-[#DAD7CD]/30 bg-[#DAD7CD]/10 p-3 text-sm text-[#344E41]/70">
                 💡 <span className="font-medium">Hint:</span> {currentSprint.hint}
               </div>
             )}
 
-            {/* Code Editor */}
             <div className="flex-1 overflow-hidden rounded-lg border border-[#DAD7CD]/30 bg-[#344E41]">
               <CodeEditor 
                 value={code} 
@@ -275,7 +265,6 @@ const Sandbox = () => {
               />
             </div>
 
-            {/* Terminal */}
             <div className="h-40 rounded-lg border border-[#DAD7CD]/30 bg-[#344E41] overflow-hidden">
               <div className="flex items-center justify-between border-b border-[#DAD7CD]/10 px-4 py-2">
                 <span className="text-sm text-[#DAD7CD]/60 font-mono">Terminal</span>

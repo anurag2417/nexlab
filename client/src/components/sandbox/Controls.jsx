@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, RotateCcw, Save, Download, Sparkles, Lightbulb } from 'lucide-react';
+import { Play, RotateCcw, Save, Download, Lightbulb } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { cn } from '../../utils/cn';
 

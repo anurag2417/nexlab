@@ -93,7 +93,6 @@ const Courses = () => {
           </div>
         </motion.div>
 
-        {/* Stats */}
         <motion.div variants={itemVariants}>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             <div className="rounded-xl border border-[#DAD7CD]/30 bg-white p-4 text-center shadow-sm">

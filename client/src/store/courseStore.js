@@ -557,7 +557,7 @@ export const useCourseStore = create((set, get) => ({
           const { useAuthStore } = await import('./authStore');
           const authStore = useAuthStore.getState();
           if (authStore.user) {
-            const xpReward = 50; // XP per sprint
+            const xpReward = 50;
             const updatedUser = {
               ...authStore.user,
               gamification: {
