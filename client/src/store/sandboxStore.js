@@ -12,34 +12,95 @@ export const useSandboxStore = create((set, get) => ({
   savedCodes: {},
   isHtmlOutput: false,
   htmlContent: '',
+  previewMode: 'split', // 'split', 'preview', 'code'
 
   setCode: (code) => set({ code }),
 
   setOutput: (output) => set({ output }),
 
-  clearOutput: () => set({ output: '', error: null, executionTime: null, isHtmlOutput: false, htmlContent: '' }),
+  setHtmlContent: (content) => set({ htmlContent: content, isHtmlOutput: true }),
+
+  setPreviewMode: (mode) => set({ previewMode: mode }),
+
+  clearOutput: () => set({ 
+    output: '', 
+    error: null, 
+    executionTime: null, 
+    isHtmlOutput: false, 
+    htmlContent: '' 
+  }),
 
   executeCode: async (data) => {
-    set({ isRunning: true, error: null, output: '⏳ Running your code...', isHtmlOutput: false, htmlContent: '' });
+    set({ 
+      isRunning: true, 
+      error: null, 
+      output: '⏳ Running your code...', 
+      isHtmlOutput: false, 
+      htmlContent: '' 
+    });
     
     try {
-      // Check if it's HTML code
-      const isHtml = data.code && (
+      // Check if it's HTML/CSS/JS code
+      const isWebCode = data.code && (
         data.code.includes('<!DOCTYPE html>') || 
         data.code.includes('<html') ||
         data.code.includes('<body') ||
+        data.code.includes('<style') ||
+        data.code.includes('<script') ||
         data.code.includes('<h1') ||
-        data.code.includes('<p')
+        data.code.includes('<p') ||
+        data.code.includes('<div') ||
+        data.code.includes('<button') ||
+        data.code.includes('<input') ||
+        data.code.includes('<form') ||
+        data.code.includes('<table') ||
+        data.code.includes('<ul') ||
+        data.code.includes('<ol') ||
+        data.code.includes('<span') ||
+        data.code.includes('<a href') ||
+        data.code.includes('document.querySelector') ||
+        data.code.includes('addEventListener') ||
+        data.code.includes('console.log') ||
+        data.code.includes('alert(')
       );
 
-      if (isHtml) {
-        const htmlContent = data.code;
+      if (isWebCode) {
+        let htmlContent = data.code;
+        if (!data.code.includes('<!DOCTYPE html>') && !data.code.includes('<html>')) {
+          htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Preview</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #ffffff;
+            color: #333333;
+            line-height: 1.6;
+        }
+        * { box-sizing: border-box; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        button, input, select, textarea {
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body>
+    ${data.code}
+</body>
+</html>`;
+        }
+        
         set({
           isHtmlOutput: true,
           htmlContent: htmlContent,
           isRunning: false,
           error: null,
-          output: '✅ HTML rendered successfully!',
+          output: '✅ Web page rendered successfully!',
           executionTime: 0.2,
         });
         return { success: true, output: htmlContent };
@@ -51,7 +112,6 @@ export const useSandboxStore = create((set, get) => ({
         const result = response.data;
         
         if (result.error) {
-          // If Python not found, use mock execution
           if (result.error.includes('Python not found') || result.error.includes('python')) {
             return await get().mockExecute(data);
           }
@@ -92,7 +152,7 @@ export const useSandboxStore = create((set, get) => ({
     }
   },
 
-  // Mock execution as fallback - FIXED
+  // Mock execution as fallback
   mockExecute: async (data) => {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -102,12 +162,42 @@ export const useSandboxStore = create((set, get) => ({
         let isHtmlOutput = false;
         let htmlContent = '';
 
-        // Check if it's HTML
+        // Check if it's Web code
         if (code.includes('<!DOCTYPE html>') || code.includes('<html') || 
-            code.includes('<body') || code.includes('<h1') || code.includes('<p')) {
+            code.includes('<body') || code.includes('<style') || code.includes('<script') ||
+            code.includes('<h1') || code.includes('<p') || code.includes('<div') ||
+            code.includes('<button') || code.includes('<input') || code.includes('<form') ||
+            code.includes('document.querySelector') || code.includes('addEventListener') ||
+            code.includes('console.log') || code.includes('alert(')) {
           isHtmlOutput = true;
-          htmlContent = code;
-          output = '✅ HTML rendered successfully!';
+          if (!code.includes('<!DOCTYPE html>') && !code.includes('<html>')) {
+            htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Preview</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #ffffff;
+            color: #333333;
+            line-height: 1.6;
+        }
+        * { box-sizing: border-box; }
+        .container { max-width: 1200px; margin: 0 auto; }
+    </style>
+</head>
+<body>
+    ${code}
+</body>
+</html>`;
+          } else {
+            htmlContent = code;
+          }
+          output = '✅ Web page rendered successfully!';
           set({
             output: output,
             error: null,
@@ -122,34 +212,16 @@ export const useSandboxStore = create((set, get) => ({
 
         // Check for print statements
         if (code.includes('print(')) {
-          // Try to evaluate print statements
           try {
-            // Extract string from print("...") or print('...')
             const match = code.match(/print\((['"])(.+?)\1\)/);
             if (match) {
               output = match[2];
             } else {
-              // Try to evaluate expressions
               const exprMatch = code.match(/print\((.+?)\)/);
               if (exprMatch) {
                 const expr = exprMatch[1].trim();
-                // Handle simple expressions
                 if (expr === '"Hello, World!"' || expr === "'Hello, World!'") {
                   output = 'Hello, World!';
-                } else if (expr === 'name' || expr === 'age' || expr === 'is_student') {
-                  // Handle variable references
-                  const varMap = {
-                    'name': 'student',
-                    'age': 15,
-                    'is_student': true
-                  };
-                  // Try to find variable assignment
-                  const varMatch = code.match(/(\w+)\s*=\s*["'](.+)["']/);
-                  if (varMatch) {
-                    output = varMatch[2];
-                  } else {
-                    output = `✅ Executed: ${expr}`;
-                  }
                 } else {
                   output = `✅ Executed: ${expr}`;
                 }
@@ -168,18 +240,6 @@ export const useSandboxStore = create((set, get) => ({
           error = '❌ Error: No code to execute';
         } else {
           output = '✅ Code executed successfully!';
-        }
-
-        // If there are multiple lines with prints, combine them
-        if (code.includes('print') && code.split('\n').filter(line => line.includes('print')).length > 1) {
-          const prints = code.split('\n').filter(line => line.includes('print'));
-          const outputs = prints.map(p => {
-            const match = p.match(/print\((['"])(.+?)\1\)/);
-            return match ? match[2] : '';
-          }).filter(Boolean);
-          if (outputs.length > 0) {
-            output = outputs.join('\n');
-          }
         }
 
         set({
