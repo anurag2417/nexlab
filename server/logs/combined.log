@@ -19,3 +19,18 @@
 {"level":"info","message":"🚀 Server running on port 5000","service":"nexlab-api","timestamp":"2026-09-01 10:52:49"}
 {"level":"info","message":"📍 Environment: development","service":"nexlab-api","timestamp":"2026-09-01 10:52:49"}
 {"level":"info","message":"✅ MongoDB Connected: ac-7cap2hi-shard-00-02.zxnw4av.mongodb.net","service":"nexlab-api","timestamp":"2026-09-01 10:52:49"}
+{"level":"info","message":"🚀 Server running on port 5000","service":"nexlab-api","timestamp":"2026-09-01 11:05:45"}
+{"level":"info","message":"📍 Environment: development","service":"nexlab-api","timestamp":"2026-09-01 11:05:45"}
+{"level":"info","message":"✅ MongoDB Connected: ac-7cap2hi-shard-00-00.zxnw4av.mongodb.net","service":"nexlab-api","timestamp":"2026-09-01 11:05:47"}
+{"level":"info","message":"🚀 Server running on port 5000","service":"nexlab-api","timestamp":"2026-09-01 11:06:03"}
+{"level":"info","message":"📍 Environment: development","service":"nexlab-api","timestamp":"2026-09-01 11:06:03"}
+{"level":"info","message":"✅ MongoDB Connected: ac-7cap2hi-shard-00-00.zxnw4av.mongodb.net","service":"nexlab-api","timestamp":"2026-09-01 11:06:04"}
+{"level":"info","message":"🚀 Server running on port 5000","service":"nexlab-api","timestamp":"2026-09-01 11:06:15"}
+{"level":"info","message":"📍 Environment: development","service":"nexlab-api","timestamp":"2026-09-01 11:06:15"}
+{"level":"info","message":"✅ MongoDB Connected: ac-7cap2hi-shard-00-00.zxnw4av.mongodb.net","service":"nexlab-api","timestamp":"2026-09-01 11:06:16"}
+{"level":"info","message":"🚀 Server running on port 5000","service":"nexlab-api","timestamp":"2026-09-01 11:07:39"}
+{"level":"info","message":"📍 Environment: development","service":"nexlab-api","timestamp":"2026-09-01 11:07:39"}
+{"level":"info","message":"✅ MongoDB Connected: ac-7cap2hi-shard-00-02.zxnw4av.mongodb.net","service":"nexlab-api","timestamp":"2026-09-01 11:07:42"}
+{"level":"info","message":"🚀 Server running on port 5000","service":"nexlab-api","timestamp":"2026-09-01 11:07:56"}
+{"level":"info","message":"📍 Environment: development","service":"nexlab-api","timestamp":"2026-09-01 11:07:56"}
+{"level":"info","message":"✅ MongoDB Connected: ac-7cap2hi-shard-00-02.zxnw4av.mongodb.net","service":"nexlab-api","timestamp":"2026-09-01 11:07:56"}

@@ -5,6 +5,8 @@ export const register = async (req, res) => {
   try {
     const { name, email, password, school, grade, city, state } = req.body;
 
+    console.log('📝 Register attempt:', { name, email });
+
     // Validate input
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -13,6 +15,7 @@ export const register = async (req, res) => {
       });
     }
 
+    // Check if user exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({
@@ -21,6 +24,7 @@ export const register = async (req, res) => {
       });
     }
 
+    // Create user
     const user = await User.create({
       name,
       email,
@@ -30,6 +34,8 @@ export const register = async (req, res) => {
       city,
       state,
     });
+
+    console.log('✅ User created:', user.email);
 
     const token = user.getSignedJwtToken();
 
@@ -42,11 +48,12 @@ export const register = async (req, res) => {
           name: user.name,
           email: user.email,
           role: user.role,
-          gamification: user.gamification,
+          gamification: user.gamification || { xp: 0, level: 1, streak: 0 },
         },
       },
     });
   } catch (error) {
+    console.error('❌ Register error:', error);
     logger.error('Register error:', error);
     res.status(500).json({
       success: false,
@@ -58,6 +65,8 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    console.log('🔑 Login attempt:', { email });
 
     if (!email || !password) {
       return res.status(400).json({
@@ -87,6 +96,8 @@ export const login = async (req, res) => {
 
     const token = user.getSignedJwtToken();
 
+    console.log('✅ User logged in:', user.email);
+
     res.status(200).json({
       success: true,
       data: {
@@ -96,11 +107,12 @@ export const login = async (req, res) => {
           name: user.name,
           email: user.email,
           role: user.role,
-          gamification: user.gamification,
+          gamification: user.gamification || { xp: 0, level: 1, streak: 0 },
         },
       },
     });
   } catch (error) {
+    console.error('❌ Login error:', error);
     logger.error('Login error:', error);
     res.status(500).json({
       success: false,
@@ -127,12 +139,13 @@ export const getMe = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
-        gamification: user.gamification,
-        profile: user.profile,
-        progress: user.progress,
+        gamification: user.gamification || { xp: 0, level: 1, streak: 0 },
+        profile: user.profile || {},
+        progress: user.progress || {},
       },
     });
   } catch (error) {
+    console.error('❌ Get me error:', error);
     logger.error('Get me error:', error);
     res.status(500).json({
       success: false,

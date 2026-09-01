@@ -1,8 +1,9 @@
 import axios from 'axios';
 
+// Make sure this is pointing to your backend
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-console.log('🔗 API URL:', API_URL);
+console.log('🔗 API URL:', API_URL); // Should show: http://localhost:5000/api
 
 const apiClient = axios.create({
   baseURL: API_URL,
@@ -33,6 +34,13 @@ apiClient.interceptors.response.use(
       localStorage.removeItem('user');
       window.location.href = '/login';
     }
+    
+    if (!error.response) {
+      return Promise.reject({ 
+        message: 'Network error. Please check your connection.' 
+      });
+    }
+    
     return Promise.reject(error);
   }
 );

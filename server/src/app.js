@@ -23,7 +23,7 @@ const app = express();
 // Security middleware
 app.use(helmet());
 
-// CORS - Allow Vercel frontend
+// CORS - Allow your frontend
 app.use(cors({
   origin: [
     'http://localhost:5173',
@@ -62,8 +62,27 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Static files
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// Routes
+// Root route
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'Welcome to NexLab API! 🚀',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      courses: '/api/courses',
+      sandbox: '/api/sandbox',
+      projects: '/api/projects',
+      leaderboard: '/api/leaderboard',
+    },
+  });
+});
+
+// AUTH ROUTES - Make sure this is before other routes
 app.use('/api/auth', authRoutes);
+
+// Other routes
 app.use('/api/courses', courseRoutes);
 app.use('/api/sandbox', sandboxRoutes);
 app.use('/api/projects', projectRoutes);
