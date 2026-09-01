@@ -1,133 +1,136 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-const mockUser = {
-  id: '1',
-  name: 'Anurag Kumar',
-  email: 'anuragakn18@gmail.com',
-  role: 'student',
-  gamification: {
-    xp: 450,
-    level: 5,
-    streak: 7,
-  },
-};
+import { authAPI } from '../api/auth';
 
 export const useAuthStore = create(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       token: localStorage.getItem('token') || null,
       isLoading: false,
       error: null,
+      isAuthenticated: false,
 
+      // Register user
+      register: async (userData) => {
+        set({ isLoading: true, error: null });
+        
+        try {
+          const response = await authAPI.register(userData);
+          const { token, user } = response.data;
+          
+          localStorage.setItem('token', token);
+          set({ 
+            user, 
+            token, 
+            isLoading: false,
+            error: null,
+            isAuthenticated: true,
+          });
+          
+          return { success: true, user };
+        } catch (error) {
+          const errorMessage = error.response?.data?.message || 'Registration failed. Please try again.';
+          set({ 
+            error: errorMessage, 
+            isLoading: false,
+            isAuthenticated: false,
+          });
+          return { success: false, error: errorMessage };
+        }
+      },
+
+      // Login user
       login: async (email, password) => {
         set({ isLoading: true, error: null });
         
         try {
-          await new Promise(resolve => setTimeout(resolve, 1000));
+          const response = await authAPI.login({ email, password });
+          const { token, user } = response.data;
           
-          if (!email || !email.includes('@')) {
-            throw new Error('Please enter a valid email address');
-          }
-          
-          if (!password || password.length < 6) {
-            throw new Error('Password must be at least 6 characters');
-          }
-          
-          const mockToken = 'mock-jwt-token-' + Date.now();
-          
-          const user = {
-            ...mockUser,
-            email: email,
-            name: email.split('@')[0] || 'User',
-          };
-          
-          localStorage.setItem('token', mockToken);
+          localStorage.setItem('token', token);
           set({ 
             user, 
-            token: mockToken, 
+            token, 
             isLoading: false,
-            error: null
+            error: null,
+            isAuthenticated: true,
           });
           
-          return { success: true };
-          
+          return { success: true, user };
         } catch (error) {
+          const errorMessage = error.response?.data?.message || 'Login failed. Please check your credentials.';
           set({ 
-            error: error.message || 'Login failed. Please try again.',
-            isLoading: false 
+            error: errorMessage, 
+            isLoading: false,
+            isAuthenticated: false,
           });
-          return { success: false, error: error.message };
+          return { success: false, error: errorMessage };
         }
       },
 
-      register: async (data) => {
-        set({ isLoading: true, error: null });
+      // Get current user
+      getCurrentUser: async () => {
+        const { token } = get();
+        if (!token) {
+          set({ isAuthenticated: false });
+          return null;
+        }
+
+        set({ isLoading: true });
         
         try {
-          await new Promise(resolve => setTimeout(resolve, 1000));
+          const response = await authAPI.getCurrentUser();
+          const user = response.data;
           
-          if (!data.name || data.name.length < 2) {
-            throw new Error('Please enter your full name');
-          }
-          
-          if (!data.email || !data.email.includes('@')) {
-            throw new Error('Please enter a valid email address');
-          }
-          
-          if (!data.password || data.password.length < 6) {
-            throw new Error('Password must be at least 6 characters');
-          }
-          
-          if (data.password !== data.confirmPassword) {
-            throw new Error('Passwords do not match');
-          }
-          
-          const mockToken = 'mock-jwt-token-' + Date.now();
-          
-          const user = {
-            id: '2',
-            name: data.name,
-            email: data.email,
-            role: 'student',
-            gamification: {
-              xp: 0,
-              level: 1,
-              streak: 0,
-            },
-          };
-          
-          localStorage.setItem('token', mockToken);
           set({ 
             user, 
-            token: mockToken, 
             isLoading: false,
-            error: null
+            isAuthenticated: true,
           });
           
-          return { success: true };
-          
+          return user;
         } catch (error) {
+          localStorage.removeItem('token');
           set({ 
-            error: error.message || 'Registration failed. Please try again.',
-            isLoading: false 
+            user: null, 
+            token: null, 
+            isLoading: false,
+            isAuthenticated: false,
           });
-          return { success: false, error: error.message };
+          return null;
         }
       },
 
-      logout: () => {
-        localStorage.removeItem('token');
-        set({ user: null, token: null, error: null });
+      // Logout user
+      logout: async () => {
+        await authAPI.logout();
+        set({ 
+          user: null, 
+          token: null, 
+          isLoading: false,
+          error: null,
+          isAuthenticated: false,
+        });
       },
 
+      // Clear error
       clearError: () => set({ error: null }),
 
-      setUser: (user) => set({ user }),
+      // Update user
+      updateUser: (userData) => {
+        set((state) => ({
+          user: { ...state.user, ...userData },
+        }));
+      },
     }),
     {
       name: 'auth-storage',
+      partialize: (state) => ({
+        user: state.user,
+        token: state.token,
+        isAuthenticated: state.isAuthenticated,
+      }),
     }
   )
 );

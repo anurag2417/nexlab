@@ -3,17 +3,17 @@ import { DashboardLayout } from '../layout/DashboardLayout';
 import { ProjectGrid } from '../components/showcase/ProjectGrid';
 import { FilterBar } from '../components/showcase/FilterBar';
 import { motion } from 'framer-motion';
-import { Rocket } from 'lucide-react';
+import { Rocket, Sparkles } from 'lucide-react';
 
 const Showcase = () => {
   const [filter, setFilter] = useState('all');
 
-  // Mock data
-  const projects = [
+  // Showcase projects only - No demo accounts
+  const showcaseProjects = [
     {
       id: '1',
-      title: 'AI Chatbot',
-      description: 'A chatbot that answers questions about Indian history.',
+      title: 'AI Chatbot for Education',
+      description: 'An intelligent chatbot that helps students learn AI concepts interactively.',
       author: 'Priya Sharma',
       tier: 4,
       image: '🤖',
@@ -25,8 +25,8 @@ const Showcase = () => {
     },
     {
       id: '2',
-      title: 'Weather App',
-      description: 'Get real-time weather updates for any city in India.',
+      title: 'Weather Prediction App',
+      description: 'Real-time weather prediction using machine learning models.',
       author: 'Arjun Kumar',
       tier: 3,
       image: '🌤️',
@@ -38,8 +38,8 @@ const Showcase = () => {
     },
     {
       id: '3',
-      title: 'Image Classifier',
-      description: 'Identify Indian birds from photos.',
+      title: 'Indian Bird Classifier',
+      description: 'Image classification model to identify Indian bird species.',
       author: 'Ananya Reddy',
       tier: 4,
       image: '🦅',
@@ -51,8 +51,8 @@ const Showcase = () => {
     },
     {
       id: '4',
-      title: 'Student Performance Analyzer',
-      description: 'Analyze and visualize student performance data.',
+      title: 'Student Performance Dashboard',
+      description: 'Interactive dashboard to analyze and visualize student performance.',
       author: 'Rahul Singh',
       tier: 5,
       image: '📊',
@@ -64,8 +64,8 @@ const Showcase = () => {
     },
     {
       id: '5',
-      title: 'Portfolio Website',
-      description: 'A personal portfolio website with dark theme.',
+      title: 'Smart Portfolio Website',
+      description: 'A modern portfolio website with AI-powered personalization.',
       author: 'Sneha Patel',
       tier: 1,
       image: '🌐',
@@ -77,8 +77,8 @@ const Showcase = () => {
     },
     {
       id: '6',
-      title: 'Number Guessing Game',
-      description: 'A fun Python game to guess the correct number.',
+      title: 'AI-Powered Number Guessing Game',
+      description: 'A fun game where AI tries to guess the number you\'re thinking of.',
       author: 'Amit Kumar',
       tier: 2,
       image: '🎯',
@@ -91,8 +91,8 @@ const Showcase = () => {
   ];
 
   const filteredProjects = filter === 'all' 
-    ? projects 
-    : projects.filter((p) => p.tier === parseInt(filter));
+    ? showcaseProjects 
+    : showcaseProjects.filter((p) => p.tier === parseInt(filter));
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -123,10 +123,12 @@ const Showcase = () => {
       >
         <motion.div variants={itemVariants}>
           <div className="flex items-center gap-3">
-            <Rocket className="h-8 w-8 text-primary-600" />
+            <div className="rounded-xl bg-gradient-to-r from-roseKiss/20 to-petalRouge/20 p-3">
+              <Rocket className="h-8 w-8 text-roseKiss" />
+            </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Student Showcase</h1>
-              <p className="text-gray-500">Explore projects built by students like you</p>
+              <h1 className="text-2xl font-bold text-gray-800">Student Showcase</h1>
+              <p className="text-gray-500">Explore amazing projects built by students</p>
             </div>
           </div>
         </motion.div>
@@ -137,6 +139,26 @@ const Showcase = () => {
         
         <motion.div variants={itemVariants}>
           <ProjectGrid projects={filteredProjects} />
+        </motion.div>
+
+        {/* Showcase Stats */}
+        <motion.div variants={itemVariants}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+            <div className="rounded-xl border border-powderBlush/30 bg-white/80 p-6 text-center shadow-sm">
+              <div className="text-3xl font-bold text-roseKiss">{showcaseProjects.length}</div>
+              <div className="text-sm text-gray-500">Total Projects</div>
+            </div>
+            <div className="rounded-xl border border-powderBlush/30 bg-white/80 p-6 text-center shadow-sm">
+              <div className="text-3xl font-bold text-drySage">{showcaseProjects.filter(p => p.tier >= 4).length}</div>
+              <div className="text-sm text-gray-500">Advanced Projects</div>
+            </div>
+            <div className="rounded-xl border border-powderBlush/30 bg-white/80 p-6 text-center shadow-sm">
+              <div className="text-3xl font-bold text-petalRouge">
+                {showcaseProjects.reduce((acc, p) => acc + p.likes, 0)}
+              </div>
+              <div className="text-sm text-gray-500">Total Likes</div>
+            </div>
+          </div>
         </motion.div>
       </motion.div>
     </DashboardLayout>
