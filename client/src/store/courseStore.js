@@ -63,35 +63,44 @@ const fullCourses = [
         title: 'Build your first webpage',
         description: 'Create a simple webpage with HTML.',
         content: `
-          <h2>HTML Basics</h2>
-          <p>HTML stands for HyperText Markup Language. It's the standard language for creating webpages.</p>
-          
-          <h3>HTML Structure</h3>
-          <pre class="bg-[#344E41] text-[#DAD7CD] p-4 rounded-lg">
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <title>Page Title</title>
-            </head>
-            <body>
-              <h1>Main Heading</h1>
-              <p>This is a paragraph.</p>
-            </body>
-          </html>
-          </pre>
-          
-          <div class="bg-[#DAD7CD]/20 p-4 rounded-lg my-4">
-            <h4 class="font-semibold text-[#3A5A40]">HTML Tags You'll Use:</h4>
-            <ul class="list-disc pl-5">
-              <li><strong>&lt;html&gt;</strong> - The root element</li>
-              <li><strong>&lt;head&gt;</strong> - Contains meta information</li>
-              <li><strong>&lt;title&gt;</strong> - Sets the page title in the browser tab</li>
-              <li><strong>&lt;body&gt;</strong> - Contains the visible content</li>
-              <li><strong>&lt;h1&gt;</strong> - Main heading</li>
-              <li><strong>&lt;p&gt;</strong> - Paragraph</li>
-            </ul>
-          </div>
-        `,
+    <h2>HTML Basics</h2>
+    <p>HTML stands for <strong>HyperText Markup Language</strong>. It's the standard language for creating webpages.</p>
+    
+    <h3>HTML Structure</h3>
+    <p>Every HTML document follows this basic structure:</p>
+    <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Page Title&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Main Heading&lt;/h1&gt;
+    &lt;p&gt;This is a paragraph.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+    
+    <div>
+      <h4>💡 HTML Tags You'll Use:</h4>
+      <ul>
+        <li><strong>&lt;html&gt;</strong> - The root element</li>
+        <li><strong>&lt;head&gt;</strong> - Contains meta information</li>
+        <li><strong>&lt;title&gt;</strong> - Sets the page title in the browser tab</li>
+        <li><strong>&lt;body&gt;</strong> - Contains the visible content</li>
+        <li><strong>&lt;h1&gt;</strong> - Main heading</li>
+        <li><strong>&lt;p&gt;</strong> - Paragraph</li>
+      </ul>
+    </div>
+    
+    <h3>Your Task</h3>
+    <p>Create a webpage with the following elements:</p>
+    <ul>
+      <li>A title in the browser tab</li>
+      <li>A main heading (h1) with your name</li>
+      <li>A paragraph (p) describing yourself</li>
+      <li>An ordered or unordered list with your hobbies</li>
+    </ul>
+  `,
         starterCode: `<!DOCTYPE html>
 <html>
 <head>
@@ -114,23 +123,23 @@ const fullCourses = [
         title: 'Create a personal portfolio',
         description: 'Build a portfolio page to showcase your work.',
         content: `
-          <h2>Creating a Portfolio</h2>
-          <p>A portfolio website showcases your work, skills, and projects. It's essential for students and professionals.</p>
-          
-          <h3>Portfolio Structure</h3>
-          <ul class="list-disc pl-5">
-            <li><strong>Header:</strong> Your name and navigation</li>
-            <li><strong>Hero Section:</strong> Introduction and tagline</li>
-            <li><strong>About Section:</strong> Your story and skills</li>
-            <li><strong>Projects Section:</strong> Showcase your work</li>
-            <li><strong>Contact Section:</strong> How to reach you</li>
-          </ul>
-          
-          <div class="bg-[#DAD7CD]/20 p-4 rounded-lg my-4">
-            <h4 class="font-semibold text-[#3A5A40]">💡 Pro Tip</h4>
-            <p>A good portfolio should be clean, professional, and easy to navigate. Focus on showcasing your best work!</p>
-          </div>
-        `,
+    <h2>Creating a Portfolio</h2>
+    <p>A portfolio website showcases your work, skills, and projects. It's essential for students and professionals.</p>
+    
+    <h3>Portfolio Structure</h3>
+    <ul>
+      <li><strong>Header:</strong> Your name and navigation</li>
+      <li><strong>Hero Section:</strong> Introduction and tagline</li>
+      <li><strong>About Section:</strong> Your story and skills</li>
+      <li><strong>Projects Section:</strong> Showcase your work</li>
+      <li><strong>Contact Section:</strong> How to reach you</li>
+    </ul>
+    
+    <div>
+      <h4>💡 Pro Tip</h4>
+      <p>A good portfolio should be clean, professional, and easy to navigate. Focus on showcasing your best work!</p>
+    </div>
+  `,
         starterCode: `<!DOCTYPE html>
 <html>
 <head>
@@ -153,22 +162,47 @@ const fullCourses = [
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #DAD7CD;
+        }
+        .skills {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .skill-tag {
+            background: #DAD7CD;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>My Portfolio</h1>
-        <p>Welcome to my portfolio! I'm a student passionate about technology and AI.</p>
+        <div class="header">
+            <h1>My Portfolio</h1>
+            <p>Welcome to my portfolio! I'm a student passionate about technology and AI.</p>
+        </div>
+        
+        <h2>About Me</h2>
+        <p>I'm a student learning web development and AI. I love building things that make a difference.</p>
+        
         <h2>My Skills</h2>
-        <ul>
-            <li>HTML & CSS</li>
-            <li>Python</li>
-            <li>Web Development</li>
-        </ul>
+        <div class="skills">
+            <span class="skill-tag">HTML & CSS</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">React</span>
+        </div>
+        
         <h2>My Projects</h2>
         <ul>
-            <li>Project 1: Coming soon</li>
-            <li>Project 2: Coming soon</li>
+            <li><strong>Project 1:</strong> Coming soon</li>
+            <li><strong>Project 2:</strong> Coming soon</li>
         </ul>
     </div>
 </body>

@@ -11,7 +11,7 @@ import { useAuthStore } from '../store/authStore';
 import { useToast } from '../components/ui/Toast';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
-import { ArrowLeft, CheckCircle, Loader2, Sparkles } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Loader2, Sparkles, Menu, X } from 'lucide-react';
 import { cn } from '../utils/cn';
 
 const Sandbox = () => {
@@ -36,6 +36,7 @@ const Sandbox = () => {
   const [isCompleted, setIsCompleted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showHint, setShowHint] = useState(false);
+  const [showLesson, setShowLesson] = useState(true);
 
   useEffect(() => {
     if (sprintId) {
@@ -131,6 +132,10 @@ const Sandbox = () => {
     setShowHint(!showHint);
   };
 
+  const toggleLesson = () => {
+    setShowLesson(!showLesson);
+  };
+
   if (isLoading) {
     return (
       <DashboardLayout>
@@ -160,7 +165,8 @@ const Sandbox = () => {
 
   return (
     <DashboardLayout>
-      <div className="space-y-4">
+      <div className="space-y-3 w-full px-0">
+        {/* Header */}
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-3">
             <Button
@@ -172,23 +178,31 @@ const Sandbox = () => {
               <ArrowLeft className="h-4 w-4 mr-1" />
               Back
             </Button>
-            <h1 className="text-xl font-bold text-[#3A5A40]">{currentSprint.title}</h1>
+            <h1 className="text-base font-bold text-[#3A5A40]">{currentSprint.title}</h1>
             {isCompleted && (
-              <Badge variant="success" className="bg-green-100 text-green-700 border-green-200">
+              <Badge variant="success" className="bg-green-100 text-green-700 border-green-200 text-xs">
                 <CheckCircle className="mr-1 h-3 w-3" />
                 Completed
               </Badge>
             )}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleLesson}
+              className="text-[#344E41]/60 hover:text-[#588157] text-xs"
+            >
+              {showLesson ? <Menu className="h-4 w-4" /> : <X className="h-4 w-4" />}
+            </Button>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-sm text-[#344E41]/60">
+            <span className="text-xs text-[#344E41]/60">
               +50 XP
             </span>
             <Button
               variant="outline"
               size="sm"
               onClick={handleReset}
-              className="border-[#DAD7CD] text-[#344E41]/60 hover:bg-[#DAD7CD]/20"
+              className="border-[#DAD7CD] text-[#344E41]/60 hover:bg-[#DAD7CD]/20 text-xs h-8"
             >
               Reset
             </Button>
@@ -199,42 +213,51 @@ const Sandbox = () => {
               disabled={isSubmitting || isCompleted}
               className={cn(
                 isCompleted 
-                  ? 'bg-green-600 hover:bg-green-700' 
-                  : 'gradient-button'
+                  ? 'bg-green-600 hover:bg-green-700 text-white' 
+                  : 'gradient-button',
+                'text-xs h-8'
               )}
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="mr-1 h-3 w-3 animate-spin" />
                   Submitting...
                 </>
               ) : isCompleted ? (
                 '✅ Completed'
               ) : (
                 <>
-                  <Sparkles className="mr-2 h-4 w-4" />
-                  Mark Complete
+                  <Sparkles className="mr-1 h-3 w-3" />
+                  Complete
                 </>
               )}
             </Button>
           </div>
         </div>
 
-        <div className="flex h-[calc(100vh-200px)] flex-col gap-4 lg:flex-row">
-          <div className="flex-1 overflow-auto rounded-lg border border-[#DAD7CD]/30 bg-white p-4 lg:w-1/2">
-            <LessonViewer sprint={currentSprint} isCompleted={isCompleted} />
-          </div>
+        {/* Main Content - Full Width */}
+        <div className="flex h-[calc(100vh-180px)] flex-col gap-3 lg:flex-row w-full">
+          {/* Left: Lesson - Toggleable */}
+          {showLesson && (
+            <div className="overflow-auto rounded-lg border border-[#DAD7CD]/30 bg-white p-3 lg:w-[35%] xl:w-[30%]">
+              <LessonViewer sprint={currentSprint} isCompleted={isCompleted} />
+            </div>
+          )}
 
-          <div className="flex flex-1 flex-col gap-4 lg:w-1/2">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-[#344E41]/60 font-mono">main.py</span>
+          {/* Right: Code Editor + Terminal - Takes remaining width */}
+          <div className={cn(
+            "flex flex-1 flex-col gap-3",
+            !showLesson && "w-full"
+          )}>
+            <div className="flex flex-wrap items-center justify-between gap-1.5">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs text-[#344E41]/60 font-mono">main.py</span>
                 {executionTime && (
-                  <span className="text-xs text-[#344E41]/40">
+                  <span className="text-[10px] text-[#344E41]/40">
                     ⚡ {executionTime.toFixed(2)}s
                   </span>
                 )}
-                <Badge variant="outline" className="text-xs border-[#A3B18A] text-[#A3B18A]">
+                <Badge variant="outline" className="text-[10px] border-[#A3B18A] text-[#A3B18A] py-0 px-1.5">
                   Python 3.9
                 </Badge>
               </div>
@@ -250,12 +273,12 @@ const Sandbox = () => {
             </div>
 
             {showHint && currentSprint.hint && (
-              <div className="rounded-lg border border-[#DAD7CD]/30 bg-[#DAD7CD]/10 p-3 text-sm text-[#344E41]/70">
+              <div className="rounded-lg border border-[#DAD7CD]/30 bg-[#DAD7CD]/10 p-1.5 text-xs text-[#344E41]/70">
                 💡 <span className="font-medium">Hint:</span> {currentSprint.hint}
               </div>
             )}
 
-            <div className="flex-1 overflow-hidden rounded-lg border border-[#DAD7CD]/30 bg-[#1a1a2e]">
+            <div className="flex-1 min-h-[200px] overflow-hidden rounded-lg border border-[#DAD7CD]/30 bg-[#1a1a2e]">
               <CodeEditor 
                 value={code} 
                 onChange={setCode}
@@ -265,7 +288,7 @@ const Sandbox = () => {
               />
             </div>
 
-            <div className="h-48 rounded-lg border border-[#DAD7CD]/30 overflow-hidden">
+            <div className="h-36 rounded-lg border border-[#DAD7CD]/30 overflow-hidden">
               <Terminal 
                 output={output} 
                 error={error}
